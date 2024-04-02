@@ -20,15 +20,13 @@ namespace eCommerce.Service
             //push attempt = 3
 
 
-
-
-            Console.WriteLine("in name");
-            string inp = "Alma";
+            string temp = "Alma";
             foreach (User user in User)
             {
-                if (inp == user.Name)
+                if (temp == user.Name)
                 {
                     Console.WriteLine(user.Balance);
+
                 }
             }
 
