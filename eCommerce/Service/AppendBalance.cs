@@ -16,14 +16,23 @@ namespace eCommerce.Service
 
             string name = "Alma";
 
-            foreach (User user in list)
-            {
-                if (user.Name == name)
-                {
-                    user.Balance += temp;
-                }
-            }
-            return list;
+
+            // Less Optimized Code Below????
+
+            //foreach (User user in list)
+            //{
+            //    if (user.Name == name)
+            //    {
+            //        user.Balance += temp;
+            //    }
+            //}
+
+            // 
+
+            var templist = list.Where(u => u.Name == name)
+                .Select(u => new User { Name = u.Name,Password = u.Password,Balance = u.Balance + temp })
+                .ToList(); 
+            return templist;
         }
     }
 }
