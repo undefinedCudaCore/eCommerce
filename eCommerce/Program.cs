@@ -15,6 +15,8 @@ namespace eCommerce
 
 
                 CheckBalanse.CheckBalanceNow(list);
+                AppendBalance.AddToBalance(list);
+                CheckBalanse.CheckBalanceNow(list);
 
             }
         }
