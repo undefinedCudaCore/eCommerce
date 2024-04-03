@@ -1,7 +1,6 @@
-﻿using eCommerce.Service;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace eCommerce.UserService
+namespace eCommerce.Service
 {
     public class UsersDatabase
     {
@@ -19,7 +18,7 @@ namespace eCommerce.UserService
                     userdata.Add(user.UserId, user);
                 }
             }
-            else userdata.Add(user.UserId, user);
+
 
 
             SaveDatabase(userdata);

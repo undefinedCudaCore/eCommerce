@@ -1,4 +1,4 @@
-﻿namespace eCommerce
+﻿namespace eCommerce.Service
 {
 
     //RegistrationService _service = new RegistrationService();
