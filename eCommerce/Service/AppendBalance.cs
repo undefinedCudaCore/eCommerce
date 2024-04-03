@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace eCommerce.Service
 {
@@ -19,12 +20,30 @@ namespace eCommerce.Service
 
             Console.WriteLine("How much should we add to the current account??");
             Console.WriteLine("Enter The Amount:  ");
-            double temp = int.Parse(Console.ReadLine());
 
 
-            
 
-            user.Balance += temp;
+            //praleidzia neigiamus skaicius
+            //reikia taisyt
+            double temp = 0;
+            while (!double.TryParse(Console.ReadLine(),out temp))
+            {
+                if (temp > 0)
+                {
+                    user.Balance += temp;
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect input detected, Try again ");
+                    Console.WriteLine("You should write a positive number.");
+                }
+            }
+
+           
+
+
+    
+
 
             //Temp Code To Check Balance After Adding
             Console.WriteLine(user.Balance);
