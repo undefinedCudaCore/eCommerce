@@ -16,8 +16,8 @@ namespace eCommerce.Service
             // Check which user is logged in and insert to method
 
             // Change method input stuff 
+            string temp = "Alma";
 
-            //push attempt = 3
 
 
             string temp = "Alma";
