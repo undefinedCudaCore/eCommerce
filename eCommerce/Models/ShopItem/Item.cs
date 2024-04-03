@@ -1,8 +1,8 @@
 ﻿namespace eCommerce.Models.ShopItem
 {
-    internal class Item
+    public class Item
     {
-        public Item(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
+        internal Item(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
         {
             ItemId = itemId;
             ItemName = itemName;
