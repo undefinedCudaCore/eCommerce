@@ -1,13 +1,14 @@
 ﻿using eCommerce.Models.ShopItem;
+using eCommerce.Service.Contracts;
 using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.ItemService
 {
-    internal class CreateShopItemService
+    internal class CreateShopItemService : IFileRead
     {
         private static readonly string ItemFilePath = new DirectoryInfo(Environment.CurrentDirectory) + "\\Data\\shopItemData.json";
 
-        internal Dictionary<string, Item> ReadShopItemsFromFile()
+        public Dictionary<string, Item> ReadFromFile()
         {
             if (File.Exists(ItemFilePath))
             {
@@ -30,7 +31,7 @@ namespace eCommerce.Service.ShopService.ItemService
         private static void AddShopItemToList(Item item)
         {
             CreateShopItemService createShopItemService = new CreateShopItemService();
-            Dictionary<string, Item> itemDictionary = createShopItemService.ReadShopItemsFromFile();
+            Dictionary<string, Item> itemDictionary = createShopItemService.ReadFromFile();
 
             itemDictionary.Add(RandomId(), item);
             createShopItemService.AddShopItemsToFile(itemDictionary);
@@ -57,5 +58,6 @@ namespace eCommerce.Service.ShopService.ItemService
             Item item = new Item(itemId, itemName, itemDescription, itemType, itemPrice);
             AddShopItemToList(item);
         }
+
     }
 }
