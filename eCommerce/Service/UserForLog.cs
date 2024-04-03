@@ -1,4 +1,4 @@
-﻿namespace eCommerce
+﻿namespace eCommerce.Service
 {
 
     //RegistrationService _service = new RegistrationService();
@@ -27,7 +27,7 @@
 
         public string Salt { get; set; }
         public string HashedPassword { get; set; }
-        public UInt32 UserID { get; set; }
+        public int UserID { get; set; }
         public eUserType UserType { get; set; } = eUserType.CUSTOMER;
 
 

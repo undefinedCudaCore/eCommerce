@@ -9,8 +9,8 @@
             // Check which user is logged in and insert to method
 
             // Change method input stuff 
+            string temp = "Alma";
 
-            //push attempt = 3
 
             string temp = "Alma";
             foreach (User user in User)

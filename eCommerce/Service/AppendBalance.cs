@@ -8,11 +8,11 @@ namespace eCommerce.Service
 {
     public class AppendBalance
     {
-        public static List<User> AddToBalance(List<User> list)
-        {
-            Console.WriteLine("How much Should be added to the balance?");
-            double temp = 13.56;
-            //double temp = double.Parse(Console.ReadLine());
+        //public static List<User> AddToBalance(List<User> list)
+        //{
+        //    Console.WriteLine("How much Should be added to the balance?");
+        //    double temp = 13.56;
+        //    //double temp = double.Parse(Console.ReadLine());
 
             string name = "Alma";
 
@@ -29,10 +29,10 @@ namespace eCommerce.Service
 
             // 
 
-            var templist = list.Where(u => u.Name == name)
-                .Select(u => new User { Name = u.Name,Password = u.Password,Balance = u.Balance + temp })
-                .ToList(); 
-            return templist;
+            //var templist = list.Where(u => u.Name == name)
+            //    .Select(u => new User { Name = u.Name,Password = u.Password,Balance = u.Balance + temp })
+            //    .ToList(); 
+           // return templist;
         }
-    }
+    
 }
