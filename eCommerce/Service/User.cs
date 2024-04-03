@@ -8,20 +8,33 @@ namespace eCommerce.Service
 {
     public class User
     {
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public double Balance { get; set; }
+        public string Username { get; set; }
+        public string Name { get; set; } = string.Empty;
+        //public string Password { get; set; }
+        public double Balance { get; set; } = 0;
+        public int UserId { get; set; } = 0;
+        public eUserType UserType { get; set; } = eUserType.UNDEFINED;
+
+
         public User()
+
         {
-            Name = string.Empty;
-            Password = string.Empty;
-            Balance = 0;
+
         }
+
+        public User(int UserId, eUserType UserType, string Username)
+        {
+            this.Username = Username;
+            this.UserId = UserId;
+            this.UserType = UserType;
+        }
+
         public User(string name, string password, double balance)
         {
             Name = name;
-            Password = password;
             Balance = balance;
         }
+
+
     }
 }

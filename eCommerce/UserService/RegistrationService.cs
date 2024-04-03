@@ -31,7 +31,7 @@ namespace eCommerce
                 var saltedPassword = password + salt;
                 var hashedPassword = _secrets.HashPassword(saltedPassword);
 
-            UInt32 lastUserId = 0;
+            int lastUserId = 0;
             if (users.Count > 0)
             {
                  lastUserId = users[users.Keys.ElementAt(users.Count-1)].UserID;
@@ -60,7 +60,7 @@ namespace eCommerce
                 return true;
             }
 
-            public bool Login(string username, string password, out UInt32 userId, out eUserType userType)
+            public bool Login(string username, string password, out int userId, out eUserType userType)
             {
                 Security _secrets = new Security();
                 var users = _secrets.LoadUsers();
