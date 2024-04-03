@@ -11,25 +11,9 @@ namespace eCommerce.Service
     {
 
 
-        public static void CheckBalanceNow(List<User> User)
+        public static void CheckBalanceNow(User user)
         {
-            // Check which user is logged in and insert to method
-
-            // Change method input stuff 
-            string temp = "Alma";
-
-
-
-            string temp = "Alma";
-            foreach (User user in User)
-            {
-                if (temp == user.Name)
-                {
-                    Console.WriteLine(user.Balance);
-
-                }
-            }
-
+            Console.WriteLine(user.Balance);
         }
 
     }
