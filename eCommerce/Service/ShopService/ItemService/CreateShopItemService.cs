@@ -1,4 +1,5 @@
-﻿using eCommerce.Models.ShopItem;
+﻿using eCommerce.Data;
+using eCommerce.Models.ShopItem;
 using eCommerce.Service.Contracts;
 using Newtonsoft.Json;
 
@@ -6,13 +7,11 @@ namespace eCommerce.Service.ShopService.ItemService
 {
     internal class CreateShopItemService : IFileRead
     {
-        private static readonly string ItemFilePath = new DirectoryInfo(Environment.CurrentDirectory) + "\\Data\\shopItemData.json";
-
         public Dictionary<string, Item> ReadFromFile()
         {
-            if (File.Exists(ItemFilePath))
+            if (File.Exists(FilePathData.ShopItemDataPath))
             {
-                var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(ItemFilePath));
+                var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.ShopItemDataPath));
                 return jsonData;
             }
             else
@@ -25,7 +24,7 @@ namespace eCommerce.Service.ShopService.ItemService
         {
             var jsonData = JsonConvert.SerializeObject(item);
 
-            File.WriteAllText(ItemFilePath, jsonData);
+            File.WriteAllText(FilePathData.ShopItemDataPath, jsonData);
         }
 
         private static void AddShopItemToList(Item item)
@@ -33,7 +32,13 @@ namespace eCommerce.Service.ShopService.ItemService
             CreateShopItemService createShopItemService = new CreateShopItemService();
             Dictionary<string, Item> itemDictionary = createShopItemService.ReadFromFile();
 
+            if (itemDictionary == null)
+            {
+                itemDictionary = new Dictionary<string, Item>();
+            }
+
             itemDictionary.Add(RandomId(), item);
+
             createShopItemService.AddShopItemsToFile(itemDictionary);
         }
 

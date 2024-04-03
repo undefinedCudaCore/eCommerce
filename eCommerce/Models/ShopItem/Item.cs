@@ -2,7 +2,7 @@
 {
     public class Item
     {
-        internal Item(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
+        public Item(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
         {
             ItemId = itemId;
             ItemName = itemName;
