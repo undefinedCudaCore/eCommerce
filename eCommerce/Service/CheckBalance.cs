@@ -1,11 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace eCommerce.Service
+﻿namespace eCommerce.Service
 {
     public class CheckBalanse
     {
@@ -17,7 +10,6 @@ namespace eCommerce.Service
 
             // Change method input stuff 
             string temp = "Alma";
-
 
 
             string temp = "Alma";

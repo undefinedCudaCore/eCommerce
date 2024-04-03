@@ -1,6 +1,7 @@
 ﻿using eCommerce.Service;
 using Microsoft.Win32;
 
+
 namespace eCommerce
 {
     public class Program
@@ -33,6 +34,8 @@ namespace eCommerce
                 CheckBalanse.CheckBalanceNow(list);
 
             }
+
+            //CreateShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
         }
     }
 }
