@@ -12,10 +12,8 @@ namespace eCommerce
                 list.Add(new User("Bob", "password", 75.2));
 
 
-
-                CheckBalanse.CheckBalanceNow(list);
                 AppendBalance.AddToBalance(list);
-                CheckBalanse.CheckBalanceNow(list);
+
 
             }
         }
