@@ -19,9 +19,10 @@ namespace eCommerce.Service
             string temp = "Alma";
 
 
+
+            string temp = "Alma";
             foreach (User user in User)
             {
-                
                 if (temp == user.Name)
                 {
                     Console.WriteLine(user.Balance);
