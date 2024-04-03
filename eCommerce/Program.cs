@@ -1,6 +1,7 @@
 ﻿using eCommerce.Service;
 using Microsoft.Win32;
 
+
 namespace eCommerce
 {
     public class Program
@@ -10,8 +11,8 @@ namespace eCommerce
             {
 
                 var list = new List<User>();
-                list.Add(new User("Alma", "password", 20.4));
-                list.Add(new User("Bob", "password", 75.2));
+               // list.Add(new User("Alma", "password", 20.4));
+               // list.Add(new User("Bob", "password", 75.2));
 
                 User _user;
 
@@ -21,10 +22,11 @@ namespace eCommerce
 
                _user = UserLogin.Login("Karolis1", "lala1");
 
+                _user.UpdateBalance(1000);
 
                 _user = UserLogin.Login("Karolis2", "lala2");
-                _user = UserLogin.Login("Karolis", "lala1");
 
+                _user = UserLogin.Login("Karolis", "lala1");
 
 
 

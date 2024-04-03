@@ -19,7 +19,17 @@ namespace eCommerce.Service
                 }
             }
 
+            SaveDatabase(userdata);
 
+        }
+        public void UpdateDatabase(User _user)
+        {
+            userdata = LoadDatabase();
+
+            if (userdata.ContainsKey(_user.UserId))
+            {
+                userdata[_user.UserId] = _user;
+            }
 
             SaveDatabase(userdata);
 
