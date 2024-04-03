@@ -1,11 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace eCommerce.Service
+﻿namespace eCommerce.Service
 {
     public class CheckBalanse
     {
@@ -16,8 +9,7 @@ namespace eCommerce.Service
             // Check which user is logged in and insert to method
 
             // Change method input stuff 
-
-            //push attempt = 3
+            string temp = "Alma";
 
 
             string temp = "Alma";

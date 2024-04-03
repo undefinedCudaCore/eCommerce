@@ -35,6 +35,8 @@ namespace eCommerce
                 CheckBalanse.CheckBalanceNow(list);
 
             }
+
+            //CreateShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
         }
     }
 }
