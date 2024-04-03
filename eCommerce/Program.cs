@@ -25,12 +25,10 @@ namespace eCommerce
                 _user = UserLogin.Login("Karolis2", "lala2");
                 _user = UserLogin.Login("Karolis", "lala1");
 
+                AppendBalance.Appendbalance(_user);
 
 
-
-                CheckBalanse.CheckBalanceNow(list);
-                //AppendBalance.AddToBalance(list);
-                CheckBalanse.CheckBalanceNow(list);
+                
 
             }
         }
