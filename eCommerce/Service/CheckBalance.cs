@@ -17,18 +17,19 @@ namespace eCommerce.Service
 
             // Change method input stuff 
 
-            //push attempt = 3
+            
 
+            // Testing Code
+            string temp = "Alma";
+            var tempuser = User.Where(u => u.Name == temp).Select(u => u.Balance).ToList();
+            // Testing code
 
-
-
-            Console.WriteLine("in name");
-            string inp = "Alma";
             foreach (User user in User)
             {
-                if (inp == user.Name)
+                if (temp == user.Name)
                 {
                     Console.WriteLine(user.Balance);
+
                 }
             }
 
