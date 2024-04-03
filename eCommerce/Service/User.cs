@@ -11,9 +11,19 @@ namespace eCommerce.Service
         public string Username { get; set; }
         public string Name { get; set; } = string.Empty;
         //public string Password { get; set; }
-        public double Balance { get; set; } = 0;
+        public double Balance {  set; get; }
+        
+
+
+        public void UpdateBalance (double value)
+        {
+            Balance = value;
+            UsersDatabase database = new UsersDatabase();
+            database.UpdateDatabase(this);
+        }
         public int UserId { get; set; } = 0;
         public eUserType UserType { get; set; } = eUserType.UNDEFINED;
+
 
 
         public User()
@@ -32,7 +42,7 @@ namespace eCommerce.Service
         public User(string name, string password, double balance)
         {
             Name = name;
-            Balance = balance;
+           // Balance = balance;
         }
 
 
