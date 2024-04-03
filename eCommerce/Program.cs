@@ -1,8 +1,9 @@
 ﻿using eCommerce.Service;
-using eCommerce;
+
 
 namespace eCommerce
-{    public class Program
+{
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -19,6 +20,8 @@ namespace eCommerce
                 CheckBalanse.CheckBalanceNow(list);
 
             }
+
+            //CreateShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
         }
     }
 }

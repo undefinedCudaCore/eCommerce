@@ -1,16 +1,16 @@
 ﻿using eCommerce.Models.ShopItem;
 
-namespace eCommerce.Models
+namespace eCommerce.Models.ShopCart
 {
     internal class Cart
     {
-        public Cart()
+        internal Cart()
         {
             CartItemList = new Dictionary<string, Item>();
         }
 
         private int _cartId { get; set; }
-        public Dictionary<string, Item> CartItemList { get; set; }
+        internal Dictionary<string, Item> CartItemList { get; set; }
 
         // To diplay in cart:
         //Item -> Price -> Qty -> Total price
