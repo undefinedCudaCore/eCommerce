@@ -10,7 +10,6 @@
             ItemType = itemType;
             ItemPrice = itemPrice;
         }
-
         public string ItemId { get; set; }
         public string ItemName { get; set; }
         public string ItemDescription { get; set; }

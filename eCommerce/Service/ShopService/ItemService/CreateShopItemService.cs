@@ -5,8 +5,9 @@ using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.ItemService
 {
-    internal class CreateShopItemService : IFileRead
+    internal class CreateShopItemService : IFileRead, IFileWrite
     {
+        internal static Item Item { get; set; }
         public Dictionary<string, Item> ReadFromFile()
         {
             if (File.Exists(FilePathData.ShopItemDataPath))
@@ -20,7 +21,7 @@ namespace eCommerce.Service.ShopService.ItemService
             }
         }
 
-        internal void AddShopItemsToFile(Dictionary<string, Item> item)
+        public void WriteToFile(Dictionary<string, Item> item)
         {
             var jsonData = JsonConvert.SerializeObject(item);
 
@@ -38,7 +39,7 @@ namespace eCommerce.Service.ShopService.ItemService
 
             itemDictionary.Add(RandomId(), item);
 
-            AddShopItemsToFile(itemDictionary);
+            WriteToFile(itemDictionary);
         }
 
         private static string RandomId()
@@ -59,9 +60,8 @@ namespace eCommerce.Service.ShopService.ItemService
 
         internal void CreateItem(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
         {
-            Item item = new Item(itemId, itemName, itemDescription, itemType, itemPrice);
-            AddShopItemToList(item);
+            Item = new Item(itemId, itemName, itemDescription, itemType, itemPrice);
+            AddShopItemToList(Item);
         }
-
     }
 }
