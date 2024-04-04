@@ -10,12 +10,14 @@ namespace eCommerce.Service.UserServices
 {
     internal static class UserLoginService
     {
-        public static User Login(string username, string password)
+        public static UserLoginErrors Login(string username, string password, out User _user)
         {
-            User _user;
+             _user = null;
             RegistrationService _service = new RegistrationService();
 
-            if (_service.Login(username, password, out int _userId, out eUserType _userType))
+            UserLoginErrors errors = new UserLoginErrors();
+
+            if ((errors=_service.Login(username, password, out int _userId, out eUserType _userType)).success)
             {
                 Console.WriteLine(_userId);
                 Console.WriteLine(Enum.GetName(typeof(eUserType), _userType));
@@ -25,16 +27,13 @@ namespace eCommerce.Service.UserServices
                 UsersDatabaseService database = new UsersDatabaseService();
                 _user = database.LoadUserData(_user);
 
-                return _user;
-
+                return errors;
 
             }
             else
             {
-                _user.LastConnectAttempt = DateTime.Now;
-                _user.FailedConnectAttempts += 1;
 
-            return null;
+            return errors;
             }
         }
     }

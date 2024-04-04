@@ -29,7 +29,8 @@
         public string HashedPassword { get; set; }
         public int UserID { get; set; }
         public eUserType UserType { get; set; } = eUserType.CUSTOMER;
-
+        public DateTime NextConnectAttempt { set; get; }
+        public int FailedConnectAttempts { set; get; }
 
     }
 }

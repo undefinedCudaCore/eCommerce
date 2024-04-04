@@ -20,17 +20,30 @@ namespace eCommerce
 
                 
                 UserRegistration.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
-                //UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
-                //UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
+                UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
+                UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
 
-               _user = UserLoginService.Login("Karolis1", "lala1");
+                UserLoginErrors loginErrors;
 
-                AppendBalanceService balanceService = new AppendBalanceService();
-                balanceService.UpdateBalance(_user, 800);
 
-                _user = UserLoginService.Login("Karolis2", "lala2");
+                if  ((loginErrors = UserLoginService.Login("Karolis1", "lala1", out User user)).success)
+                {
+                    _user = user;
 
-                _user = UserLoginService.Login("Karolis", "lala1");
+                } else
+                {
+                    Console.WriteLine(loginErrors.UserBlockedUntil);
+                }
+
+               //_user = UserLoginService.Login("Karolis1", "la1");
+
+               // AppendBalanceService balanceService = new AppendBalanceService();
+
+               //// balanceService.UpdateBalance(_user, 800);
+
+               // _user = UserLoginService.Login("Karolis2", "lala2");
+
+               // _user = UserLoginService.Login("Karolis", "lala1");
 
 
 

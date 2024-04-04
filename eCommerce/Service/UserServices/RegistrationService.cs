@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Models.UserModels;
 using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace eCommerce.Service.UserServices
 {
@@ -40,14 +41,15 @@ namespace eCommerce.Service.UserServices
             users.Add(username, new UserForLog { Salt = salt, HashedPassword = hashedPassword, UserID = lastUserId + 1, UserType = userType });
 
             _secrets.SaveUsers(users);
-            UsersDatabaseService database = new UsersDatabaseService();
+
             return true;
         }
 
 
 
-        public bool Login(string username, string password, out int userId, out eUserType userType)
+        public UserLoginErrors Login(string username, string password, out int userId, out eUserType userType)
         {
+            UserLoginErrors errors= new UserLoginErrors();
             SecurityService _secrets = new SecurityService();
             var users = _secrets.LoadUsers();
 
@@ -56,19 +58,46 @@ namespace eCommerce.Service.UserServices
 
             if (!users.ContainsKey(username))
             {
-                return false;
+                errors.UserNotExits = true;
+
+                return errors;
             }
 
             var user = users[username];
+
+            if (user.NextConnectAttempt > DateTime.Now)
+            {
+                errors.UserBlockedUntil = user.NextConnectAttempt;
+                return errors;
+            }
+
             var saltedPassword = password + user.Salt;
             var hashedPassword = _secrets.HashPassword(saltedPassword);
             if (user.HashedPassword == hashedPassword)
             {
+                user.FailedConnectAttempts = 0;
                 userId = user.UserID;
                 userType = user.UserType;
-                return true;
+                errors.success = true;
+                return errors;
+
+            }else
+            {
+                user.FailedConnectAttempts += 1;
+
+                if (user.FailedConnectAttempts > 2)
+                {
+                    user.NextConnectAttempt = DateTime.Now.AddSeconds(180);
+                    user.FailedConnectAttempts = 0;
+                }
+                errors.TriesLeft = 3 - user.FailedConnectAttempts;
+
+                users[username] = user;
+                _secrets.SaveUsers(users);
+
+                return errors;
+
             }
-            return false;
         }
 
 
@@ -76,5 +105,12 @@ namespace eCommerce.Service.UserServices
 
     }
 
-
+    public class UserLoginErrors()
+    {
+        internal bool success = false;
+        internal bool UserNotExits = false;
+        internal DateTime UserBlockedUntil = DateTime.Now;
+        internal bool PasswordIncorrect = false;
+        internal int TriesLeft = 0;
+    }
 }

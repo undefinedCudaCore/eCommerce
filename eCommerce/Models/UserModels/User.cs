@@ -14,8 +14,7 @@ namespace eCommerce.Models.UserModels
         //public string Password { get; set; }
         public double Balance { set; get; }
 
-        public DateTime LastConnectAttempt { set; get; }
-        public int FailedConnectAttempts { set; get; }
+
 
 
         public int UserId { get; set; } = 0;
