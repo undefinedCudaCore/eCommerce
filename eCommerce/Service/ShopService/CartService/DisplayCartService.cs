@@ -1,5 +1,6 @@
 ﻿using eCommerce.Data;
 using eCommerce.Models.ShopItem;
+using eCommerce.Models.UserModels;
 using eCommerce.Service.Contracts;
 using Newtonsoft.Json;
 

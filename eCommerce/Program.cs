@@ -12,12 +12,13 @@ namespace eCommerce
         static void Main(string[] args)
         {
                 var list = new List<User>();
-               // list.Add(new User("Alma", "password", 20.4));
-               // list.Add(new User("Bob", "password", 75.2));
+            // list.Add(new User("Alma", "password", 20.4));
+            // list.Add(new User("Bob", "password", 75.2));
 
-                User _user;
+            User currentUser = new User();
 
-                
+
+
                 UserRegistration.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
                 UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
                 UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
@@ -27,7 +28,7 @@ namespace eCommerce
 
                 if  ((loginErrors = UserLoginService.Login("Karolis", "lala1", out User user)).success)
                 {
-                    _user = user;
+                currentUser = user;
 
                 } else
                 {
@@ -36,7 +37,6 @@ namespace eCommerce
                 UserManagementService userManagement = new UserManagementService();
 
                  List<string> users = userManagement.GetCustomersListUsersList();
-            User currentUser = _user;
 
 
                //_user = UserLoginService.Login("Karolis1", "la1");
@@ -65,7 +65,10 @@ namespace eCommerce
             //check.ShowContent(currentUser);
 
             DisplayCartService displayCartService = new DisplayCartService();
-            displayCartService.ShowContent(currentUser);
+
+            
+                displayCartService.ShowContent(currentUser);
+            
         }
     }
 }

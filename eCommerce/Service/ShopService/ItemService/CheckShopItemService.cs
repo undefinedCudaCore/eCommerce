@@ -2,6 +2,7 @@
 using eCommerce.Models.ShopItem;
 using eCommerce.Service.Contracts;
 using Newtonsoft.Json;
+using eCommerce.Models.UserModels;
 
 namespace eCommerce.Service.ShopService.ItemService
 {
