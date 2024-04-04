@@ -5,14 +5,15 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Models.UserModels;
 
-namespace eCommerce.Service
+namespace eCommerce.Service.UserServices
 {
-    internal class Security
+    internal class SecurityService
     {
         private static readonly string FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NothingInteresting.json");
 
-        public Security()
+        public SecurityService()
         {
         }
 
