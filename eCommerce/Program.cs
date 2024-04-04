@@ -1,5 +1,4 @@
 ﻿using eCommerce.Service;
-using eCommerce.Service.ShopService.CartService;
 using eCommerce.Service.ShopService.ItemService;
 
 namespace eCommerce
@@ -37,8 +36,11 @@ namespace eCommerce
 
             CreateShopItemService createShopItemService = new CreateShopItemService();
             createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
-            AddToCartServise addToCartServise = new AddToCartServise();
-            addToCartServise.AddToCartList(_user, CreateShopItemService.Item);
+            //AddToCartServise addToCartServise = new AddToCartServise();
+            //addToCartServise.AddToCartList(_user, CreateShopItemService.Item);
+
+            CheckShopItemService check = new CheckShopItemService();
+            check.ShowContent();
         }
     }
 }
