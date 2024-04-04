@@ -26,7 +26,7 @@ namespace eCommerce
                 UserLoginErrors loginErrors;
 
 
-                if  ((loginErrors = UserLoginService.Login("Karolis1", "lala1", out User user)).success)
+                if  ((loginErrors = UserLoginService.Login("Karolis", "lala1", out User user)).success)
                 {
                     _user = user;
 
@@ -34,16 +34,20 @@ namespace eCommerce
                 {
                     Console.WriteLine(loginErrors.UserBlockedUntil);
                 }
+                UserManagementService userManagement = new UserManagementService();
+
+                 List<string> users = userManagement.GetCustomersListUsersList();
+
 
                //_user = UserLoginService.Login("Karolis1", "la1");
 
-               // AppendBalanceService balanceService = new AppendBalanceService();
+                // AppendBalanceService balanceService = new AppendBalanceService();
 
-               //// balanceService.UpdateBalance(_user, 800);
+                //// balanceService.UpdateBalance(_user, 800);
 
-               // _user = UserLoginService.Login("Karolis2", "lala2");
+                // _user = UserLoginService.Login("Karolis2", "lala2");
 
-               // _user = UserLoginService.Login("Karolis", "lala1");
+                // _user = UserLoginService.Login("Karolis", "lala1");
 
 
 

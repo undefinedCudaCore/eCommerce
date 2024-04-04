@@ -71,7 +71,10 @@ namespace eCommerce.Service.UserServices
                 return errors;
             }
 
-            var saltedPassword = password + user.Salt;
+
+
+
+                var saltedPassword = password + user.Salt;
             var hashedPassword = _secrets.HashPassword(saltedPassword);
             if (user.HashedPassword == hashedPassword)
             {
@@ -90,6 +93,7 @@ namespace eCommerce.Service.UserServices
                     user.NextConnectAttempt = DateTime.Now.AddSeconds(180);
                     user.FailedConnectAttempts = 0;
                 }
+
                 errors.TriesLeft = 3 - user.FailedConnectAttempts;
 
                 users[username] = user;
@@ -103,14 +107,5 @@ namespace eCommerce.Service.UserServices
 
 
 
-    }
-
-    public class UserLoginErrors()
-    {
-        internal bool success = false;
-        internal bool UserNotExits = false;
-        internal DateTime UserBlockedUntil = DateTime.Now;
-        internal bool PasswordIncorrect = false;
-        internal int TriesLeft = 0;
     }
 }
