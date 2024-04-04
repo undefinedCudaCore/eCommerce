@@ -1,4 +1,4 @@
-﻿using eCommerce.Service.ShopService.ItemService;
+﻿using eCommerce.Service;
 
 namespace eCommerce
 {
@@ -6,35 +6,36 @@ namespace eCommerce
     {
         static void Main(string[] args)
         {
-            /* {
+            {
 
-                 var list = new List<User>();
+                var list = new List<User>();
                 // list.Add(new User("Alma", "password", 20.4));
                 // list.Add(new User("Bob", "password", 75.2));
 
-                 User _user;
+                User _user;
 
-                 UserRegistration.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
-                 UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
-                 UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
+                UserRegistration.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
+                UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
+                UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
 
                 _user = UserLogin.Login("Karolis1", "lala1");
 
-                 _user.UpdateBalance(1000);
+                _user.UpdateBalance(1000);
 
-                 _user = UserLogin.Login("Karolis2", "lala2");
+                _user = UserLogin.Login("Karolis2", "lala2");
 
-                 _user = UserLogin.Login("Karolis", "lala1");
+                _user = UserLogin.Login("Karolis", "lala1");
 
 
 
-                 CheckBalanse.CheckBalanceNow(list);
-                 //AppendBalance.AddToBalance(list);
-                 CheckBalanse.CheckBalanceNow(list);
+                CheckBalanse.CheckBalanceNow(list);
+                //AppendBalance.AddToBalance(list);
+                CheckBalanse.CheckBalanceNow(list);
 
-             }*/
+            }
 
-            CreateShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
+            //CreateShopItemService createShopItemService = new CreateShopItemService();
+            //createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
         }
     }
 }

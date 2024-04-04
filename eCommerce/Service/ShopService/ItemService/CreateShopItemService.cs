@@ -27,10 +27,9 @@ namespace eCommerce.Service.ShopService.ItemService
             File.WriteAllText(FilePathData.ShopItemDataPath, jsonData);
         }
 
-        private static void AddShopItemToList(Item item)
+        private void AddShopItemToList(Item item)
         {
-            CreateShopItemService createShopItemService = new CreateShopItemService();
-            Dictionary<string, Item> itemDictionary = createShopItemService.ReadFromFile();
+            Dictionary<string, Item> itemDictionary = ReadFromFile();
 
             if (itemDictionary == null)
             {
@@ -39,7 +38,7 @@ namespace eCommerce.Service.ShopService.ItemService
 
             itemDictionary.Add(RandomId(), item);
 
-            createShopItemService.AddShopItemsToFile(itemDictionary);
+            AddShopItemsToFile(itemDictionary);
         }
 
         private static string RandomId()
@@ -58,7 +57,7 @@ namespace eCommerce.Service.ShopService.ItemService
             return randomId;
         }
 
-        internal static void CreateItem(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
+        internal void CreateItem(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
         {
             Item item = new Item(itemId, itemName, itemDescription, itemType, itemPrice);
             AddShopItemToList(item);
