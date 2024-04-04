@@ -1,5 +1,6 @@
 ﻿using eCommerce.Models.UserModels;
 using eCommerce.Service;
+using eCommerce.Service.UserServices;
 using Microsoft.Win32;
 
 
@@ -17,17 +18,19 @@ namespace eCommerce
 
                 User _user;
 
+                
                 UserRegistration.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
-                UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
-                UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
+                //UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
+                //UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
 
-               _user = UserLogin.Login("Karolis1", "lala1");
+               _user = UserLoginService.Login("Karolis1", "lala1");
 
-                _user.UpdateBalance(1000);
+                AppendBalanceService balanceService = new AppendBalanceService();
+                balanceService.UpdateBalance(_user, 800);
 
-                _user = UserLogin.Login("Karolis2", "lala2");
+                _user = UserLoginService.Login("Karolis2", "lala2");
 
-                _user = UserLogin.Login("Karolis", "lala1");
+                _user = UserLoginService.Login("Karolis", "lala1");
 
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using eCommerce.Service;
+using eCommerce.Service.UserServices;
 
 namespace eCommerce.Models.UserModels
 {
@@ -14,17 +14,14 @@ namespace eCommerce.Models.UserModels
         //public string Password { get; set; }
         public double Balance { set; get; }
 
+        public DateTime LastConnectAttempt { set; get; }
+        public int FailedConnectAttempts { set; get; }
 
 
-        public void UpdateBalance(double value)
-        {
-            Balance = value;
-            UsersDatabaseService database = new UsersDatabaseService();
-            database.UpdateDatabase(this);
-        }
         public int UserId { get; set; } = 0;
-        public eUserType UserType { get; set; } = eUserType.UNDEFINED;
 
+
+        public eUserType UserType { get; set; } = eUserType.UNDEFINED;
 
 
         public User()

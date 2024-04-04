@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Models.UserModels;
+using eCommerce.Service.UserServices;
 
 namespace eCommerce.Service
 {

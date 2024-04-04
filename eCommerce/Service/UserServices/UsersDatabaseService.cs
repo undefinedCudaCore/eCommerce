@@ -1,7 +1,7 @@
 ﻿using eCommerce.Models.UserModels;
 using Newtonsoft.Json;
 
-namespace eCommerce.Service
+namespace eCommerce.Service.UserServices
 {
     public class UsersDatabaseService
     {

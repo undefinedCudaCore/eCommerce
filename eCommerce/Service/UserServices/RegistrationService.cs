@@ -4,9 +4,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Models.UserModels;
 using Newtonsoft.Json;
 
-namespace eCommerce.Service
+namespace eCommerce.Service.UserServices
 {
 
 
@@ -14,9 +15,9 @@ namespace eCommerce.Service
     public class RegistrationService
     {
 
-        public bool Register(string username, string password,eUserType userType, out int userId)
+        public bool Register(string username, string password, eUserType userType, out int userId)
         {
-            Security _secrets = new Security();
+            SecurityService _secrets = new SecurityService();
             userId = 0;
             var users = _secrets.LoadUsers();
 
@@ -36,34 +37,18 @@ namespace eCommerce.Service
                 lastUserId = users[users.Keys.ElementAt(users.Count - 1)].UserID;
             }
             userId = lastUserId;
-            users.Add(username, new UserForLog { Salt = salt, HashedPassword = hashedPassword, UserID = lastUserId + 1,UserType = userType });
+            users.Add(username, new UserForLog { Salt = salt, HashedPassword = hashedPassword, UserID = lastUserId + 1, UserType = userType });
 
             _secrets.SaveUsers(users);
             UsersDatabaseService database = new UsersDatabaseService();
             return true;
         }
 
-        public bool RegisterAdmin(string username, string password, eUserType userType, string adminPassword)
-        {
-            if (adminPassword != "parduotuve")
-                return false;
 
-            Security _secrets = new Security();
-
-            var users = _secrets.LoadUsers();
-
-            var salt = _secrets.GenerateSalt();
-            var saltedPassword = password + salt;
-            var hashedPassword = _secrets.HashPassword(saltedPassword);
-            users[username] = new UserForLog { Salt = salt, HashedPassword = hashedPassword, UserType = eUserType.ADMINISTRATOR };
-
-            _secrets.SaveUsers(users);
-            return true;
-        }
 
         public bool Login(string username, string password, out int userId, out eUserType userType)
         {
-            Security _secrets = new Security();
+            SecurityService _secrets = new SecurityService();
             var users = _secrets.LoadUsers();
 
             userId = 0;

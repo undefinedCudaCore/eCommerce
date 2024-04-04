@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Models.UserModels;
 
-namespace eCommerce.Service
+namespace eCommerce.Service.UserServices
 
 {
-    internal static class UserLogin
+    internal static class UserLoginService
     {
         public static User Login(string username, string password)
         {
@@ -24,11 +24,18 @@ namespace eCommerce.Service
 
                 UsersDatabaseService database = new UsersDatabaseService();
                 _user = database.LoadUserData(_user);
+
                 return _user;
 
 
             }
-            else return null;
+            else
+            {
+                _user.LastConnectAttempt = DateTime.Now;
+                _user.FailedConnectAttempts += 1;
+
+            return null;
+            }
         }
     }
 }
