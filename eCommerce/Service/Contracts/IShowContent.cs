@@ -2,6 +2,6 @@
 {
     internal interface IShowContent
     {
-        public void ShowContent();
+        public void ShowContent(User currentUser);
     }
 }

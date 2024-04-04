@@ -1,4 +1,5 @@
 ﻿using eCommerce.Service;
+using eCommerce.Service.ShopService.CartService;
 using eCommerce.Service.ShopService.ItemService;
 
 namespace eCommerce
@@ -7,8 +8,6 @@ namespace eCommerce
     {
         static void Main(string[] args)
         {
-
-
             var list = new List<User>();
             // list.Add(new User("Alma", "password", 20.4));
             // list.Add(new User("Bob", "password", 75.2));
@@ -27,6 +26,7 @@ namespace eCommerce
 
             _user = UserLogin.Login("Karolis", "lala1");
 
+            User currentUser = _user;
 
 
             CheckBalanse.CheckBalanceNow(list);
@@ -35,12 +35,15 @@ namespace eCommerce
 
 
             CreateShopItemService createShopItemService = new CreateShopItemService();
-            createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
+            //createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
             //AddToCartServise addToCartServise = new AddToCartServise();
             //addToCartServise.AddToCartList(_user, CreateShopItemService.Item);
 
-            CheckShopItemService check = new CheckShopItemService();
-            check.ShowContent();
+            //CheckShopItemService check = new CheckShopItemService();
+            //check.ShowContent(currentUser);
+
+            DisplayCartService displayCartService = new DisplayCartService();
+            displayCartService.ShowContent(currentUser);
         }
     }
 }

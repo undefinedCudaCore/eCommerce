@@ -3,17 +3,17 @@ using eCommerce.Models.ShopItem;
 using eCommerce.Service.Contracts;
 using Newtonsoft.Json;
 
-namespace eCommerce.Service.ShopService.ItemService
+namespace eCommerce.Service.ShopService.CartService
 {
-    internal class CheckShopItemService : IFileRead, IShowContent
+    internal class DisplayCartService : IFileRead, IShowContent
     {
         public Dictionary<string, Item> ReadFromFile()
         {
-            if (File.Exists(FilePathData.ShopItemDataPath))
+            if (File.Exists(FilePathData.CartDataPath))
             {
                 try
                 {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.ShopItemDataPath));
+                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath));
                     return jsonData;
                 }
                 catch (DirectoryNotFoundException)
@@ -40,18 +40,16 @@ namespace eCommerce.Service.ShopService.ItemService
 
         public void ShowContent(User currentUser)
         {
-            var itemDictionary = ReadFromFile();
+            string currUserId = currentUser.UserId.ToString();
+            var cartDictionary = ReadFromFile();
 
-            try
+            Console.WriteLine($"Users  cart information:");
+            Console.WriteLine("Cart items:");
+            Console.WriteLine();
+
+            foreach (var item in cartDictionary)
             {
-                Console.WriteLine($"Welcome to eCommerce Shop {currentUser.Username}!");
-                Console.WriteLine("--------------------------");
-                Console.WriteLine();
-
-                Console.WriteLine("Here you can list our products:");
-                Console.WriteLine();
-
-                foreach (var item in itemDictionary)
+                if (item.Key == currUserId)
                 {
                     Console.WriteLine("--------");
                     Console.WriteLine($"Title: {item.Value.ItemName}");
@@ -61,10 +59,10 @@ namespace eCommerce.Service.ShopService.ItemService
                     Console.WriteLine("--------");
                     Console.WriteLine();
                 }
-            }
-            catch (IOException)
-            {
-                Console.WriteLine("Something went wrong, contact your software administrator.");
+                else
+                {
+                    Console.WriteLine("Cart is empty..");
+                }
             }
         }
     }
