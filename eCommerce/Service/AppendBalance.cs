@@ -25,11 +25,11 @@ namespace eCommerce.Service
 
             //praleidzia neigiamus skaicius -- fixed
             // kitaip nesugalvojau
-            bool IsDone = false;
+            
             double temp = 0;
             double temp1 = 0;
       
-            while (temp < 1 && !IsDone)
+            while (temp < 1)
             {
                 temp = temp1;
                 if (temp > 0)
