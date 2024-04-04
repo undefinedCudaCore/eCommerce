@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Service;
 
-namespace eCommerce.Service
+namespace eCommerce.Models.UserModels
 {
     public class User
     {
         public string Username { get; set; }
         public string Name { get; set; } = string.Empty;
         //public string Password { get; set; }
-        public double Balance {  set; get; }
-        
+        public double Balance { set; get; }
 
 
-        public void UpdateBalance (double value)
+
+        public void UpdateBalance(double value)
         {
             Balance = value;
-            UsersDatabase database = new UsersDatabase();
+            UsersDatabaseService database = new UsersDatabaseService();
             database.UpdateDatabase(this);
         }
         public int UserId { get; set; } = 0;
@@ -42,7 +43,7 @@ namespace eCommerce.Service
         public User(string name, string password, double balance)
         {
             Name = name;
-           // Balance = balance;
+            // Balance = balance;
         }
 
 

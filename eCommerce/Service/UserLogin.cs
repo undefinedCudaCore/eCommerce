@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Models.UserModels;
 
 namespace eCommerce.Service
 
@@ -21,7 +22,7 @@ namespace eCommerce.Service
 
                 _user = new User(_userId, _userType, username);
 
-                UsersDatabase database = new UsersDatabase();
+                UsersDatabaseService database = new UsersDatabaseService();
                 _user = database.LoadUserData(_user);
                 return _user;
 

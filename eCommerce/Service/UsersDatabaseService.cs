@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using eCommerce.Models.UserModels;
+using Newtonsoft.Json;
 
 namespace eCommerce.Service
 {
-    public class UsersDatabase
+    public class UsersDatabaseService
     {
         private Dictionary<int, User> userdata = new Dictionary<int, User>();
         private static readonly string FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UsersDatabase.json");
 
-        public UsersDatabase() { }
+        public UsersDatabaseService() { }
 
         public void AddUser(User user)
         {

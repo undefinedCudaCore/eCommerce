@@ -39,7 +39,7 @@ namespace eCommerce.Service
             users.Add(username, new UserForLog { Salt = salt, HashedPassword = hashedPassword, UserID = lastUserId + 1,UserType = userType });
 
             _secrets.SaveUsers(users);
-            UsersDatabase database = new UsersDatabase();
+            UsersDatabaseService database = new UsersDatabaseService();
             return true;
         }
 

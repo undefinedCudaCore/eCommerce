@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Service
+﻿namespace eCommerce.Models.UserModels
 {
 
     //RegistrationService _service = new RegistrationService();
