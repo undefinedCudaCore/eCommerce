@@ -23,26 +23,28 @@ namespace eCommerce.Service
 
 
 
-            //praleidzia neigiamus skaicius
-            //reikia taisyt
+            //praleidzia neigiamus skaicius -- fixed
+            // kitaip nesugalvojau
+            bool IsDone = false;
             double temp = 0;
-            while (!double.TryParse(Console.ReadLine(),out temp))
+            double temp1 = 0;
+      
+            while (temp < 1 && !IsDone)
             {
+                temp = temp1;
                 if (temp > 0)
                 {
                     user.Balance += temp;
+
                 }
                 else
                 {
                     Console.WriteLine("Incorrect input detected, Try again ");
                     Console.WriteLine("You should write a positive number.");
+                    double.TryParse(Console.ReadLine(), out temp1);
                 }
             }
-
-           
-
-
-    
+            
 
 
             //Temp Code To Check Balance After Adding
