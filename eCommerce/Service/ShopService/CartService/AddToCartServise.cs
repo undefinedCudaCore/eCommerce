@@ -15,7 +15,17 @@ namespace eCommerce.Service.ShopService.CartService
                 try
                 {
                     var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath));
-                    return jsonData;
+                    List<KeyValuePair<string, Item>> myList = jsonData.ToList();
+
+                    myList.Sort(
+                        delegate (KeyValuePair<string, Item> pair1,
+                        KeyValuePair<string, Item> pair2)
+                        {
+                            return pair1.Value.ItemName.CompareTo(pair2.Value.ItemName);
+                        }
+                    );
+
+                    return myList.ToDictionary<string, Item>();
                 }
                 catch (DirectoryNotFoundException)
                 {
