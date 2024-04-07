@@ -4,6 +4,6 @@ namespace eCommerce.Service.Contracts
 {
     internal interface IFileRead
     {
-        internal Dictionary<string, Item> ReadFromFile();
+        internal Dictionary<string, Item> ReadFromFile(string path);
     }
 }

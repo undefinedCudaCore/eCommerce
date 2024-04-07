@@ -7,51 +7,11 @@ using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.CartService
 {
-    internal class BuyItemService : IFileRead, IFileWrite, IShowContent, IFileCheckUserItems
+    internal class BuyItemService : IFileWrite, IShowContent, IFileCheckUserItems
     {
         private double _totalPrice;
         private bool _haveItems = false;
         private bool _notLowBalance = true;
-        public Dictionary<string, Item> ReadFromFile()
-        {
-            if (File.Exists(FilePathData.CartDataPath1))
-            {
-                try
-                {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath1));
-                    List<KeyValuePair<string, Item>> myList = jsonData.ToList();
-
-                    myList.Sort(
-                        delegate (KeyValuePair<string, Item> pair1,
-                        KeyValuePair<string, Item> pair2)
-                        {
-                            return pair1.Value.ItemName.CompareTo(pair2.Value.ItemName);
-                        }
-                    );
-
-                    return myList.ToDictionary<string, Item>();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    Console.WriteLine("File directory was not found.");
-                    return new Dictionary<string, Item>();
-                }
-                catch (FileNotFoundException)
-                {
-                    Console.WriteLine("File was not found");
-                    return new Dictionary<string, Item>();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Other important error..Contact the developer.");
-                    return new Dictionary<string, Item>();
-                }
-            }
-            else
-            {
-                return new Dictionary<string, Item>();
-            }
-        }
 
         public void WriteToFile(Dictionary<string, Item> obj)
         {
@@ -104,32 +64,33 @@ namespace eCommerce.Service.ShopService.CartService
             return _totalPrice;
         }
 
-        //public double CachOutCartPrice(User user)
-        //{
-        //    var cartItemList = ReadFromFile();
-        //    var doesUserHasItemsInCart = CheckIsThereItemsInCartForCurrentUser(user, cartItemList, out bool haveItems);
+        public bool CachOutQty(User user, Dictionary<string, Item> cartIems)
+        {
+            ReadFromFileService readFromFileService = new ReadFromFileService();
+            var shopItems = readFromFileService.ReadFromFile(FilePathData.ShopItemDataPath);
 
-        //    if (!doesUserHasItemsInCart)
-        //    {
-        //        return 0;
-        //    }
-
-        //    if (haveItems && !double.IsNaN(_totalPrice) && _totalPrice >= 0
-        //        || haveItems && !double.IsNaN(user.Balance) && user.Balance >= 0
-        //        || haveItems && _totalPrice < user.Balance)
-        //    {
-        //        return user.Balance - _totalPrice;
-        //    }
-
-        //    return double.NaN;
-        //}
+            foreach (var shopItem in shopItems)
+            {
+                foreach (var cartItem in cartIems)
+                {
+                    if (cartItem.Value.ItemQuantity > shopItem.Value.ItemQuantity)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
         public void BuyCartItems(User user)
         {
-            var cartItemList = ReadFromFile();
+            ReadFromFileService readFromFile = new ReadFromFileService();
+            var cartItemList = readFromFile.ReadFromFile(FilePathData.CartDataPath1);
 
             CheckIsThereItemsInCartForCurrentUser(user, cartItemList, out bool haveItems);
             _haveItems = haveItems;
+
+            var itemInWarehouse = CachOutQty(user, cartItemList);
 
             if (haveItems && user.Balance < _totalPrice)
             {

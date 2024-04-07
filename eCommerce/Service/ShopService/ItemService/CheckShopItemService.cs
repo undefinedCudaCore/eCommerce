@@ -1,57 +1,16 @@
 ﻿using eCommerce.Data;
-using eCommerce.Models.ShopItem;
-using eCommerce.Service.Contracts;
-using Newtonsoft.Json;
 using eCommerce.Models.UserModels;
+using eCommerce.Service.Contracts;
 
 namespace eCommerce.Service.ShopService.ItemService
 {
-    internal class CheckShopItemService : IFileRead, IShowContent
+    internal class CheckShopItemService : IShowContent
     {
-        public Dictionary<string, Item> ReadFromFile()
-        {
-            if (File.Exists(FilePathData.ShopItemDataPath))
-            {
-                try
-                {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.ShopItemDataPath));
-                    List<KeyValuePair<string, Item>> myList = jsonData.ToList();
-
-                    myList.Sort(
-                        delegate (KeyValuePair<string, Item> pair1,
-                        KeyValuePair<string, Item> pair2)
-                        {
-                            return pair1.Value.ItemName.CompareTo(pair2.Value.ItemName);
-                        }
-                    );
-
-                    return myList.ToDictionary<string, Item>();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    Console.WriteLine("File directory was not found.");
-                    return new Dictionary<string, Item>();
-                }
-                catch (FileNotFoundException)
-                {
-                    Console.WriteLine("File was not found");
-                    return new Dictionary<string, Item>();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Other important error..Contact the developer.");
-                    return new Dictionary<string, Item>();
-                }
-            }
-            else
-            {
-                throw new FileNotFoundException();
-            }
-        }
 
         public void ShowContent(User currentUser)
         {
-            var itemDictionary = ReadFromFile();
+            ReadFromFileService readFromFileService = new ReadFromFileService();
+            var itemDictionary = readFromFileService.ReadFromFile(FilePathData.ShopItemDataPath);
 
             try
             {

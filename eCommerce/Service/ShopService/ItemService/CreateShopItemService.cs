@@ -9,11 +9,11 @@ namespace eCommerce.Service.ShopService.ItemService
     internal class CreateShopItemService : IFileRead, IFileWrite
     {
         internal static Item Item { get; set; }
-        public Dictionary<string, Item> ReadFromFile()
+        public Dictionary<string, Item> ReadFromFile(string path)
         {
-            if (File.Exists(FilePathData.ShopItemDataPath) && new FileInfo(FilePathData.ShopItemDataPath).Length > 0)
+            if (File.Exists(path) && new FileInfo(path).Length > 0)
             {
-                var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.ShopItemDataPath));
+                var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(path));
                 List<KeyValuePair<string, Item>> myList = jsonData.ToList();
 
                 myList.Sort(
@@ -41,7 +41,7 @@ namespace eCommerce.Service.ShopService.ItemService
 
         private void AddShopItemToList(Item item)
         {
-            Dictionary<string, Item> itemDictionary = ReadFromFile();
+            Dictionary<string, Item> itemDictionary = ReadFromFile(FilePathData.ShopItemDataPath);
 
             if (itemDictionary == null)
             {

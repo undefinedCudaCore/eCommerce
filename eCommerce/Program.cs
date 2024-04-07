@@ -53,7 +53,7 @@ namespace eCommerce
             // _user = UserLoginService.Login("Karolis", "lala1");
 
             AppendBalanceService balanceService = new AppendBalanceService();
-            //balanceService.UpdateBalance(currentUser, 10000);
+            //balanceService.UpdateBalance(currentUser, 100000);
 
             CheckBalanse.CheckBalanceNow(currentUser);
             //AppendBalance.AddToBalance(list);

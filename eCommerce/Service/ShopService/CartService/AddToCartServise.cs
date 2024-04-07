@@ -7,48 +7,8 @@ using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.CartService
 {
-    internal class AddToCartServise : IFileRead, IFileWrite
+    internal class AddToCartServise : IFileWrite
     {
-        public Dictionary<string, Item> ReadFromFile()
-        {
-            if (File.Exists(FilePathData.CartDataPath1))
-            {
-                try
-                {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath1));
-                    List<KeyValuePair<string, Item>> myList = jsonData.ToList();
-
-                    myList.Sort(
-                        delegate (KeyValuePair<string, Item> pair1,
-                        KeyValuePair<string, Item> pair2)
-                        {
-                            return pair1.Value.ItemName.CompareTo(pair2.Value.ItemName);
-                        }
-                    );
-
-                    return myList.ToDictionary<string, Item>();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    Console.WriteLine("File directory was not found.");
-                    return new Dictionary<string, Item>();
-                }
-                catch (FileNotFoundException)
-                {
-                    Console.WriteLine("File was not found");
-                    return new Dictionary<string, Item>();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Other important error..Contact the developer.");
-                    return new Dictionary<string, Item>();
-                }
-            }
-            else
-            {
-                return new Dictionary<string, Item>();
-            }
-        }
 
         public void WriteToFile(Dictionary<string, Item> obj)
         {
@@ -74,13 +34,15 @@ namespace eCommerce.Service.ShopService.CartService
 
         internal void AddToCartList(User user, Item item)
         {
-            Dictionary<string, Item> cartDictionary = ReadFromFile();
+            ReadFromFileService readFromFileService = new ReadFromFileService();
+            Dictionary<string, Item> cartDictionary = readFromFileService.ReadFromFile(FilePathData.CartDataPath1);
 
             if (cartDictionary == null)
             {
                 cartDictionary = new Dictionary<string, Item>();
             }
             item.ItemUserId = user.UserId;
+            item.ItemQuantity = 1;
 
             cartDictionary.Add(RandomId.RandomIdGenerator(), item);
 
