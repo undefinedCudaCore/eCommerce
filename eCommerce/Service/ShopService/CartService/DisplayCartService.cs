@@ -2,80 +2,68 @@
 using eCommerce.Models.ShopItem;
 using eCommerce.Models.UserModels;
 using eCommerce.Service.Contracts;
-using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.CartService
 {
-    internal class DisplayCartService : IFileRead, IShowContent
+    internal class DisplayCartService : IShowContent, IFileCheckUserItems
     {
-        public Dictionary<string, Item> ReadFromFile()
+        private double _totalPrice;
+        public static bool cartEmpty = false;
+
+        public bool CheckIsThereItemsInCartForCurrentUser(User currentUser, Dictionary<string, Item> cartList, out bool haveItems)
         {
-            if (File.Exists(FilePathData.CartDataPath))
+            haveItems = false;
+            foreach (var item in cartList)
             {
-                try
+                if (item.Value.ItemUserId == currentUser.UserId)
                 {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath));
-
-                    List<KeyValuePair<string, Item>> myList = jsonData.ToList();
-
-                    myList.Sort(
-                        delegate (KeyValuePair<string, Item> pair1,
-                        KeyValuePair<string, Item> pair2)
-                        {
-                            return pair1.Value.ItemName.CompareTo(pair2.Value.ItemName);
-                        }
-                    );
-
-                    return myList.ToDictionary<string, Item>();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    Console.WriteLine("File directory was not found.");
-                    return new Dictionary<string, Item>();
-                }
-                catch (FileNotFoundException)
-                {
-                    Console.WriteLine("File was not found");
-                    return new Dictionary<string, Item>();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Other important error..Contact the developer.");
-                    return new Dictionary<string, Item>();
+                    haveItems = true;
+                    return true;
                 }
             }
-            else
+            return false;
+        }
+        public double Total(double price)
+        {
+            if (price.Equals(double.NaN))
             {
-                return new Dictionary<string, Item>();
-
-                // throw new FileNotFoundException();
+                return 0;
             }
+            return _totalPrice += price;
         }
 
         public void ShowContent(User currentUser)
         {
-            string currUserId = currentUser.UserId.ToString();
-            var cartDictionary = ReadFromFile();
+            var currUserId = currentUser.UserId;
+
+            ReadFromFileService readFromFileService = new ReadFromFileService();
+            var cartDictionary = readFromFileService.ReadFromFile(FilePathData.CartDataPath1);
+            bool isThereItems = CheckIsThereItemsInCartForCurrentUser(currentUser, cartDictionary, out bool haveItems);
 
             Console.WriteLine($"Users  cart information:");
             Console.WriteLine("Cart items:");
             Console.WriteLine();
 
-            foreach (var item in cartDictionary)
+            if (!isThereItems)
             {
-                if (item.Key == currUserId)
+                cartEmpty = true;
+                Console.WriteLine("Cart is empty...");
+            }
+            else
+            {
+                foreach (var item in cartDictionary)
                 {
-                    Console.WriteLine("--------");
-                    Console.WriteLine($"Title: {item.Value.ItemName}");
-                    Console.WriteLine($"Type: {item.Value.ItemType}");
-                    Console.WriteLine($"Price: {item.Value.ItemPrice}");
-                    Console.WriteLine($"Decription: {item.Value.ItemDescription}");
-                    Console.WriteLine("--------");
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine("Cart is empty..");
+                    if (item.Value.ItemUserId == currUserId)
+                    {
+                        Console.WriteLine("--------");
+                        Console.WriteLine($"Title: {item.Value.ItemName}");
+                        Console.WriteLine($"Type: {item.Value.ItemType}");
+                        Console.WriteLine($"Price: {item.Value.ItemPrice}");
+                        Console.WriteLine($"Qty: {item.Value.ItemQuantity}");
+                        Console.WriteLine($"Decription: {item.Value.ItemDescription}");
+                        Console.WriteLine("--------");
+                        Console.WriteLine();
+                    }
                 }
             }
         }

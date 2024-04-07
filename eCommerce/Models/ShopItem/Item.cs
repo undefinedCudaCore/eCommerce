@@ -11,6 +11,7 @@
             ItemPrice = itemPrice;
         }
         public string ItemId { get; set; }
+        public int ItemUserId { get; set; }
         public string ItemName { get; set; }
         public string ItemDescription { get; set; }
         public string ItemType { get; set; }

@@ -2,52 +2,13 @@
 using eCommerce.Models.ShopItem;
 using eCommerce.Models.UserModels;
 using eCommerce.Service.Contracts;
+using eCommerce.Service.RandomGenerators;
 using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.CartService
 {
-    internal class AddToCartServise : IFileRead, IFileWrite
+    internal class AddToCartServise : IFileWrite
     {
-        public Dictionary<string, Item> ReadFromFile()
-        {
-            if (File.Exists(FilePathData.CartDataPath))
-            {
-                try
-                {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath));
-                    List<KeyValuePair<string, Item>> myList = jsonData.ToList();
-
-                    myList.Sort(
-                        delegate (KeyValuePair<string, Item> pair1,
-                        KeyValuePair<string, Item> pair2)
-                        {
-                            return pair1.Value.ItemName.CompareTo(pair2.Value.ItemName);
-                        }
-                    );
-
-                    return myList.ToDictionary<string, Item>();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    Console.WriteLine("File directory was not found.");
-                    return new Dictionary<string, Item>();
-                }
-                catch (FileNotFoundException)
-                {
-                    Console.WriteLine("File was not found");
-                    return new Dictionary<string, Item>();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Other important error..Contact the developer.");
-                    return new Dictionary<string, Item>();
-                }
-            }
-            else
-            {
-                return new Dictionary<string, Item>();
-            }
-        }
 
         public void WriteToFile(Dictionary<string, Item> obj)
         {
@@ -55,11 +16,11 @@ namespace eCommerce.Service.ShopService.CartService
             {
                 var jsonData = JsonConvert.SerializeObject(obj);
 
-                File.WriteAllText(FilePathData.CartDataPath, jsonData);
+                File.WriteAllText(FilePathData.CartDataPath1, jsonData);
             }
             catch (ArgumentException)
             {
-                Console.WriteLine("Your list is null.");
+                Console.WriteLine("Your list is empty.");
             }
             catch (DirectoryNotFoundException)
             {
@@ -73,14 +34,17 @@ namespace eCommerce.Service.ShopService.CartService
 
         internal void AddToCartList(User user, Item item)
         {
-            Dictionary<string, Item> cartDictionary = ReadFromFile();
+            ReadFromFileService readFromFileService = new ReadFromFileService();
+            Dictionary<string, Item> cartDictionary = readFromFileService.ReadFromFile(FilePathData.CartDataPath1);
 
             if (cartDictionary == null)
             {
                 cartDictionary = new Dictionary<string, Item>();
             }
+            item.ItemUserId = user.UserId;
+            item.ItemQuantity = 1;
 
-            cartDictionary.Add(user.UserId.ToString(), item);
+            cartDictionary.Add(RandomId.RandomIdGenerator(), item);
 
             WriteToFile(cartDictionary);
         }

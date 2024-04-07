@@ -1,9 +1,7 @@
 ﻿using eCommerce.Models.UserModels;
 using eCommerce.Service;
-using eCommerce.Service.UserServices;
-using Microsoft.Win32;
 using eCommerce.Service.ShopService.CartService;
-using eCommerce.Service.ShopService.ItemService;
+using eCommerce.Service.UserServices;
 
 namespace eCommerce
 {
@@ -11,7 +9,7 @@ namespace eCommerce
     {
         static void Main(string[] args)
         {
-                var list = new List<User>();
+            var list = new List<User>();
             // list.Add(new User("Alma", "password", 20.4));
             // list.Add(new User("Bob", "password", 75.2));
 
@@ -23,23 +21,24 @@ namespace eCommerce
             registrationService.Register("Karolis1", "lala1", eUserType.CUSTOMER);
             registrationService.Register("Karolis2", "lala2", eUserType.MANAGER);
 
-                UserLoginErrors loginErrors;
+            UserLoginErrors loginErrors;
             UserLoginService loginService = new UserLoginService();
 
-                if  ((loginErrors = loginService.Login("Karolis1", "lala1", out User user)).success)
-                {
-                    currentUser = user;
+            if ((loginErrors = loginService.Login("Karolis2", "lala2", out User user)).success)
+            {
+                currentUser = user;
 
-                } else
-                {
-                    Console.WriteLine(loginErrors.Message);
-                }
-           
+            }
+            else
+            {
+                Console.WriteLine(loginErrors.Message);
+            }
+
             UserManagementService userManagement = new UserManagementService();
 
-                 var users = userManagement.GetRegisteredUsersList();
+            var users = userManagement.GetRegisteredUsersList();
             UserManagementErrors errors = new UserManagementErrors();
-            errors= userManagement.RemoveUserById(1);
+            errors = userManagement.RemoveUserById(1);
 
             users = userManagement.GetRegisteredUsersList();
 
@@ -53,26 +52,31 @@ namespace eCommerce
 
             // _user = UserLoginService.Login("Karolis", "lala1");
 
+            AppendBalanceService balanceService = new AppendBalanceService();
+            //balanceService.UpdateBalance(currentUser, 100000);
+
+            CheckBalanse.CheckBalanceNow(currentUser);
+            //AppendBalance.AddToBalance(list);
+            CheckBalanse.CheckBalanceNow(currentUser);
 
 
-            CheckBalanse.CheckBalanceNow(list);
-                //AppendBalance.AddToBalance(list);
-                CheckBalanse.CheckBalanceNow(list);
-
-
-            CreateShopItemService createShopItemService = new CreateShopItemService();
-            //createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
+            //CreateShopItemService createShopItemService = new CreateShopItemService();
+            //createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 22999.00);
             //AddToCartServise addToCartServise = new AddToCartServise();
-            //addToCartServise.AddToCartList(_user, CreateShopItemService.Item);
+            //addToCartServise.AddToCartList(currentUser, CreateShopItemService.Item);
 
             //CheckShopItemService check = new CheckShopItemService();
             //check.ShowContent(currentUser);
 
             DisplayCartService displayCartService = new DisplayCartService();
+            displayCartService.ShowContent(currentUser);
 
-            
-                displayCartService.ShowContent(currentUser);
-            
+            BuyItemService buyItemService = new BuyItemService();
+            buyItemService.BuyCartItems(currentUser);
+            buyItemService.ShowContent(currentUser);
+
+            CheckBalanse.CheckBalanceNow(currentUser);
+
         }
     }
 }

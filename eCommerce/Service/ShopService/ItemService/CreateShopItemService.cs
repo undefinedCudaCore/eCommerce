@@ -1,6 +1,7 @@
 ﻿using eCommerce.Data;
 using eCommerce.Models.ShopItem;
 using eCommerce.Service.Contracts;
+using eCommerce.Service.RandomGenerators;
 using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.ItemService
@@ -8,11 +9,11 @@ namespace eCommerce.Service.ShopService.ItemService
     internal class CreateShopItemService : IFileRead, IFileWrite
     {
         internal static Item Item { get; set; }
-        public Dictionary<string, Item> ReadFromFile()
+        public Dictionary<string, Item> ReadFromFile(string path)
         {
-            if (File.Exists(FilePathData.ShopItemDataPath))
+            if (File.Exists(path) && new FileInfo(path).Length > 0)
             {
-                var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.ShopItemDataPath));
+                var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(path));
                 List<KeyValuePair<string, Item>> myList = jsonData.ToList();
 
                 myList.Sort(
@@ -40,32 +41,16 @@ namespace eCommerce.Service.ShopService.ItemService
 
         private void AddShopItemToList(Item item)
         {
-            Dictionary<string, Item> itemDictionary = ReadFromFile();
+            Dictionary<string, Item> itemDictionary = ReadFromFile(FilePathData.ShopItemDataPath);
 
             if (itemDictionary == null)
             {
                 itemDictionary = new Dictionary<string, Item>();
             }
 
-            itemDictionary.Add(RandomId(), item);
+            itemDictionary.Add(RandomId.RandomIdGenerator(), item);
 
             WriteToFile(itemDictionary);
-        }
-
-        private static string RandomId()
-        {
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var stringChars = new char[8];
-            var random = new Random();
-
-            for (int i = 0; i < stringChars.Length; i++)
-            {
-                stringChars[i] = chars[random.Next(chars.Length)];
-            }
-
-            var randomId = new String(stringChars);
-
-            return randomId;
         }
 
         internal void CreateItem(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
