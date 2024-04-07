@@ -15,5 +15,6 @@
         public string ItemDescription { get; set; }
         public string ItemType { get; set; }
         public double ItemPrice { get; set; }
+        public int ItemQuantity { get; set; }
     }
 }
