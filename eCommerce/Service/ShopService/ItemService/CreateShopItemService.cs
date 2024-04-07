@@ -1,6 +1,7 @@
 ﻿using eCommerce.Data;
 using eCommerce.Models.ShopItem;
 using eCommerce.Service.Contracts;
+using eCommerce.Service.RandomGenerators;
 using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.ItemService
@@ -10,7 +11,7 @@ namespace eCommerce.Service.ShopService.ItemService
         internal static Item Item { get; set; }
         public Dictionary<string, Item> ReadFromFile()
         {
-            if (File.Exists(FilePathData.ShopItemDataPath))
+            if (File.Exists(FilePathData.ShopItemDataPath) && new FileInfo(FilePathData.ShopItemDataPath).Length > 0)
             {
                 var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.ShopItemDataPath));
                 List<KeyValuePair<string, Item>> myList = jsonData.ToList();
@@ -47,25 +48,9 @@ namespace eCommerce.Service.ShopService.ItemService
                 itemDictionary = new Dictionary<string, Item>();
             }
 
-            itemDictionary.Add(RandomId(), item);
+            itemDictionary.Add(RandomId.RandomIdGenerator(), item);
 
             WriteToFile(itemDictionary);
-        }
-
-        private static string RandomId()
-        {
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var stringChars = new char[8];
-            var random = new Random();
-
-            for (int i = 0; i < stringChars.Length; i++)
-            {
-                stringChars[i] = chars[random.Next(chars.Length)];
-            }
-
-            var randomId = new String(stringChars);
-
-            return randomId;
         }
 
         internal void CreateItem(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)

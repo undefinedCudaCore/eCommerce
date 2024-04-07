@@ -2,6 +2,7 @@
 using eCommerce.Models.ShopItem;
 using eCommerce.Models.UserModels;
 using eCommerce.Service.Contracts;
+using eCommerce.Service.RandomGenerators;
 using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.CartService
@@ -79,8 +80,9 @@ namespace eCommerce.Service.ShopService.CartService
             {
                 cartDictionary = new Dictionary<string, Item>();
             }
+            item.ItemUserId = user.UserId;
 
-            cartDictionary.Add(user.UserId.ToString(), item);
+            cartDictionary.Add(RandomId.RandomIdGenerator(), item);
 
             WriteToFile(cartDictionary);
         }

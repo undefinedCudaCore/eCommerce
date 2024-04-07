@@ -52,30 +52,46 @@ namespace eCommerce.Service.ShopService.CartService
             }
         }
 
+        public bool CheckIsThereItemsInCartForCurrentUser(User currentUser, Dictionary<string, Item> cartList)
+        {
+            foreach (var item in cartList)
+            {
+                if (item.Value.ItemUserId == currentUser.UserId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void ShowContent(User currentUser)
         {
-            string currUserId = currentUser.UserId.ToString();
+            var currUserId = currentUser.UserId;
             var cartDictionary = ReadFromFile();
+            bool isThereItems = CheckIsThereItemsInCartForCurrentUser(currentUser, cartDictionary);
 
             Console.WriteLine($"Users  cart information:");
             Console.WriteLine("Cart items:");
             Console.WriteLine();
 
-            foreach (var item in cartDictionary)
+            if (!isThereItems)
             {
-                if (item.Key == currUserId)
+                Console.WriteLine("Cart is empty...");
+            }
+            else
+            {
+                foreach (var item in cartDictionary)
                 {
-                    Console.WriteLine("--------");
-                    Console.WriteLine($"Title: {item.Value.ItemName}");
-                    Console.WriteLine($"Type: {item.Value.ItemType}");
-                    Console.WriteLine($"Price: {item.Value.ItemPrice}");
-                    Console.WriteLine($"Decription: {item.Value.ItemDescription}");
-                    Console.WriteLine("--------");
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine("Cart is empty..");
+                    if (item.Value.ItemUserId == currUserId)
+                    {
+                        Console.WriteLine("--------");
+                        Console.WriteLine($"Title: {item.Value.ItemName}");
+                        Console.WriteLine($"Type: {item.Value.ItemType}");
+                        Console.WriteLine($"Price: {item.Value.ItemPrice}");
+                        Console.WriteLine($"Decription: {item.Value.ItemDescription}");
+                        Console.WriteLine("--------");
+                        Console.WriteLine();
+                    }
                 }
             }
         }
