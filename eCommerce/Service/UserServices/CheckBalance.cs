@@ -1,4 +1,6 @@
-﻿namespace eCommerce.Service
+﻿using eCommerce.Models.UserModels;
+
+namespace eCommerce.Service
 {
     public class CheckBalanse
     {

@@ -1,5 +1,6 @@
 ﻿using eCommerce.Data;
 using eCommerce.Models.ShopItem;
+using eCommerce.Models.UserModels;
 using eCommerce.Service.Contracts;
 using Newtonsoft.Json;
 
@@ -45,7 +46,9 @@ namespace eCommerce.Service.ShopService.CartService
             }
             else
             {
-                throw new FileNotFoundException();
+                return new Dictionary<string, Item>();
+
+                // throw new FileNotFoundException();
             }
         }
 

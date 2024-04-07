@@ -1,4 +1,7 @@
-﻿using eCommerce.Service;
+﻿using eCommerce.Models.UserModels;
+using eCommerce.Service;
+using eCommerce.Service.UserServices;
+using Microsoft.Win32;
 using eCommerce.Service.ShopService.CartService;
 using eCommerce.Service.ShopService.ItemService;
 
@@ -8,30 +11,53 @@ namespace eCommerce
     {
         static void Main(string[] args)
         {
-            var list = new List<User>();
+                var list = new List<User>();
             // list.Add(new User("Alma", "password", 20.4));
             // list.Add(new User("Bob", "password", 75.2));
 
-            User _user;
+            User currentUser = new User();
 
-            UserRegistration.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
-            UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
-            UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
+            UserRegistrationService registrationService = new UserRegistrationService();
 
-            _user = UserLogin.Login("Karolis1", "lala1");
+            registrationService.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
+            registrationService.Register("Karolis1", "lala1", eUserType.CUSTOMER);
+            registrationService.Register("Karolis2", "lala2", eUserType.MANAGER);
 
-            _user.UpdateBalance(1000);
+                UserLoginErrors loginErrors;
+            UserLoginService loginService = new UserLoginService();
 
-            _user = UserLogin.Login("Karolis2", "lala2");
+                if  ((loginErrors = loginService.Login("Karolis1", "lala1", out User user)).success)
+                {
+                    currentUser = user;
 
-            _user = UserLogin.Login("Karolis", "lala1");
+                } else
+                {
+                    Console.WriteLine(loginErrors.Message);
+                }
+           
+            UserManagementService userManagement = new UserManagementService();
 
-            User currentUser = _user;
+                 var users = userManagement.GetRegisteredUsersList();
+            UserManagementErrors errors = new UserManagementErrors();
+            errors= userManagement.RemoveUserById(1);
+
+            users = userManagement.GetRegisteredUsersList();
+
+            //_user = UserLoginService.Login("Karolis1", "la1");
+
+            // AppendBalanceService balanceService = new AppendBalanceService();
+
+            //// balanceService.UpdateBalance(_user, 800);
+
+            // _user = UserLoginService.Login("Karolis2", "lala2");
+
+            // _user = UserLoginService.Login("Karolis", "lala1");
+
 
 
             CheckBalanse.CheckBalanceNow(list);
-            //AppendBalance.AddToBalance(list);
-            CheckBalanse.CheckBalanceNow(list);
+                //AppendBalance.AddToBalance(list);
+                CheckBalanse.CheckBalanceNow(list);
 
 
             CreateShopItemService createShopItemService = new CreateShopItemService();
@@ -43,7 +69,10 @@ namespace eCommerce
             //check.ShowContent(currentUser);
 
             DisplayCartService displayCartService = new DisplayCartService();
-            displayCartService.ShowContent(currentUser);
+
+            
+                displayCartService.ShowContent(currentUser);
+            
         }
     }
 }
