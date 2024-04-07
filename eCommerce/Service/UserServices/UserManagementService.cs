@@ -9,21 +9,48 @@ namespace eCommerce.Service.UserServices
 {
     internal class UserManagementService
     {
+
+        /// <summary>
+        ///  removes user from login database by its id
+        /// </summary>
+        /// <returns></returns>
+        internal UserManagementErrors RemoveUserById(int Id)
+        {
+            UserManagementErrors errors=new UserManagementErrors();
+            Dictionary<int, string> RegisteredUsers = new Dictionary<int, string>();
+            SecurityService _secrets = new SecurityService();
+            var users = _secrets.LoadUsers();
+
+            var user = users.FirstOrDefault(u => u.Value.UserID == Id);
+            if (user.Key != null && users.ContainsKey(user.Key) )
+            {
+                users.Remove(user.Key);
+                _secrets.SaveUsers(users);
+                errors.success = true;
+                errors.Message = "User removed succesfully";
+            } else
+            {
+                errors.UserNotExits = true;
+                errors.Message = "This user was not found in our database";
+            }
+
+            return errors;
+        }
+
         /// <summary>
         ///  this returns users that have registered in shop
         /// </summary>
         /// <returns></returns>
-        internal List <string> GetRegisteredUsersList ()
+        internal Dictionary <int,string> GetRegisteredUsersList ()
         {
-             List<string> RegisteredUsers = new List<string> ();
+            Dictionary<int, string> RegisteredUsers = new Dictionary<int, string>();
             SecurityService _secrets = new SecurityService();
             var users = _secrets.LoadUsers();
 
             foreach (var user in users) 
             {
-                RegisteredUsers.Add(user.Key);
+                RegisteredUsers.Add(user.Value.UserID , $"Username {user.Key}");
             }
-
             return RegisteredUsers;
         }
 
