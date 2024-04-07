@@ -60,7 +60,7 @@ namespace eCommerce.Service.ShopService.CartService
             }
             catch (ArgumentException)
             {
-                Console.WriteLine("Your list is null.");
+                Console.WriteLine("Your list is empty.");
             }
             catch (DirectoryNotFoundException)
             {

@@ -6,8 +6,10 @@ using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.CartService
 {
-    internal class DisplayCartService : IFileRead, IShowContent
+    internal class DisplayCartService : IFileRead, IShowContent, IFileCheckUserItems
     {
+        private double _price;
+
         public Dictionary<string, Item> ReadFromFile()
         {
             if (File.Exists(FilePathData.CartDataPath))
@@ -62,6 +64,14 @@ namespace eCommerce.Service.ShopService.CartService
                 }
             }
             return false;
+        }
+        public double Total(double price)
+        {
+            if (price.Equals(double.NaN))
+            {
+                return 0;
+            }
+            return _price += price;
         }
 
         public void ShowContent(User currentUser)
