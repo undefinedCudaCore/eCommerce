@@ -35,7 +35,9 @@ namespace eCommerce.Service.ShopService.CartService
             }
             else
             {
-                throw new FileNotFoundException();
+                return new Dictionary<string, Item>();
+
+                // throw new FileNotFoundException();
             }
         }
 

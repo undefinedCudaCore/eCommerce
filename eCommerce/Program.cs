@@ -17,16 +17,16 @@ namespace eCommerce
 
             User currentUser = new User();
 
+            UserRegistrationService registrationService = new UserRegistrationService();
 
-
-                UserRegistration.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
-                UserRegistration.Register("Karolis1", "lala1", eUserType.CUSTOMER);
-                UserRegistration.Register("Karolis2", "lala2", eUserType.MANAGER);
+            registrationService.Register("Karolis", "lala1", eUserType.ADMINISTRATOR);
+            registrationService.Register("Karolis1", "lala1", eUserType.CUSTOMER);
+            registrationService.Register("Karolis2", "lala2", eUserType.MANAGER);
 
                 UserLoginErrors loginErrors;
+            UserLoginService loginService = new UserLoginService();
 
-
-                if  ((loginErrors = UserLoginService.Login("Karolis1", "lala1", out User user)).success)
+                if  ((loginErrors = loginService.Login("Karolis1", "lala1", out User user)).success)
                 {
                     currentUser = user;
 
