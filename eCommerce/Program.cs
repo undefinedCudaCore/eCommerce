@@ -26,32 +26,36 @@ namespace eCommerce
                 UserLoginErrors loginErrors;
 
 
-                if  ((loginErrors = UserLoginService.Login("Karolis", "lala1", out User user)).success)
+                if  ((loginErrors = UserLoginService.Login("Karolis1", "lala1", out User user)).success)
                 {
-                currentUser = user;
+                    currentUser = user;
 
                 } else
                 {
-                    Console.WriteLine(loginErrors.UserBlockedUntil);
+                    Console.WriteLine(loginErrors.Message);
                 }
-                UserManagementService userManagement = new UserManagementService();
+           
+            UserManagementService userManagement = new UserManagementService();
 
-                 List<string> users = userManagement.GetCustomersListUsersList();
+                 var users = userManagement.GetRegisteredUsersList();
+            UserManagementErrors errors = new UserManagementErrors();
+            errors= userManagement.RemoveUserById(1);
+
+            users = userManagement.GetRegisteredUsersList();
+
+            //_user = UserLoginService.Login("Karolis1", "la1");
+
+            // AppendBalanceService balanceService = new AppendBalanceService();
+
+            //// balanceService.UpdateBalance(_user, 800);
+
+            // _user = UserLoginService.Login("Karolis2", "lala2");
+
+            // _user = UserLoginService.Login("Karolis", "lala1");
 
 
-               //_user = UserLoginService.Login("Karolis1", "la1");
 
-                // AppendBalanceService balanceService = new AppendBalanceService();
-
-                //// balanceService.UpdateBalance(_user, 800);
-
-                // _user = UserLoginService.Login("Karolis2", "lala2");
-
-                // _user = UserLoginService.Login("Karolis", "lala1");
-
-
-
-                CheckBalanse.CheckBalanceNow(list);
+            CheckBalanse.CheckBalanceNow(list);
                 //AppendBalance.AddToBalance(list);
                 CheckBalanse.CheckBalanceNow(list);
 

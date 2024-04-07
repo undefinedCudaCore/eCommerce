@@ -68,13 +68,13 @@ namespace eCommerce.Service.UserServices
             if (user.NextConnectAttempt > DateTime.Now)
             {
                 errors.UserBlockedUntil = user.NextConnectAttempt;
+                errors.Message = "Due multiple bad logins this user is blocked for  " + (errors.UserBlockedUntil - DateTime.Now).TotalSeconds.ToString() + "seconds ";
                 return errors;
             }
 
 
 
-
-                var saltedPassword = password + user.Salt;
+            var saltedPassword = password + user.Salt;
             var hashedPassword = _secrets.HashPassword(saltedPassword);
             if (user.HashedPassword == hashedPassword)
             {
@@ -88,13 +88,20 @@ namespace eCommerce.Service.UserServices
             {
                 user.FailedConnectAttempts += 1;
 
-                if (user.FailedConnectAttempts > 2)
+                if (user.FailedConnectAttempts == 3)
                 {
-                    user.NextConnectAttempt = DateTime.Now.AddSeconds(180);
+                    user.NextConnectAttempt = DateTime.Now.AddSeconds(120);
+                    errors.Message = "User is Blocked until " + user.NextConnectAttempt + " If you enter bad password again you will be blocked until " + DateTime.Now.AddSeconds(600);
+                }
+                else if (user.FailedConnectAttempts == 4)
+                {
+                    user.NextConnectAttempt = DateTime.Now.AddSeconds(600);
                     user.FailedConnectAttempts = 0;
+                    errors.Message = "User is Blocked until " + user.NextConnectAttempt;
+
                 }
 
-                errors.TriesLeft = 3 - user.FailedConnectAttempts;
+                errors.TriesLeft = 4 - user.FailedConnectAttempts;
 
                 users[username] = user;
                 _secrets.SaveUsers(users);

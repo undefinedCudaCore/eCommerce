@@ -22,8 +22,6 @@ namespace eCommerce.Service
 
             if (_service.Register(username, password, _userType, out int userId))
             {
-
-
                 return true;
             }
             else return false;
