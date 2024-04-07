@@ -8,9 +8,9 @@ using eCommerce.Models.UserModels;
 namespace eCommerce.Service.UserServices
 
 {
-    internal static class UserLoginService
+    internal class UserLoginService
     {
-        public static UserLoginErrors Login(string username, string password, out User _user)
+        internal UserLoginErrors Login(string username, string password, out User _user)
         {
              _user = null;
             RegistrationService _service = new RegistrationService();
