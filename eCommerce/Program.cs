@@ -24,7 +24,7 @@ namespace eCommerce
             UserLoginErrors loginErrors;
             UserLoginService loginService = new UserLoginService();
 
-            if ((loginErrors = loginService.Login("Karolis", "lala1", out User user)).success)
+            if ((loginErrors = loginService.Login("Karolis2", "lala2", out User user)).success)
             {
                 currentUser = user;
 
@@ -52,15 +52,16 @@ namespace eCommerce
 
             // _user = UserLoginService.Login("Karolis", "lala1");
 
+            AppendBalanceService balanceService = new AppendBalanceService();
+            //balanceService.UpdateBalance(currentUser, 10000);
 
-
-            CheckBalanse.CheckBalanceNow(list);
+            CheckBalanse.CheckBalanceNow(currentUser);
             //AppendBalance.AddToBalance(list);
-            CheckBalanse.CheckBalanceNow(list);
+            CheckBalanse.CheckBalanceNow(currentUser);
 
 
             //CreateShopItemService createShopItemService = new CreateShopItemService();
-            //createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 999.99);
+            //createShopItemService.CreateItem("1", "iPhone", "Not very good phone.", "Smartphone", 22999.00);
             //AddToCartServise addToCartServise = new AddToCartServise();
             //addToCartServise.AddToCartList(currentUser, CreateShopItemService.Item);
 
@@ -69,6 +70,12 @@ namespace eCommerce
 
             DisplayCartService displayCartService = new DisplayCartService();
             displayCartService.ShowContent(currentUser);
+
+            BuyItemService buyItemService = new BuyItemService();
+            buyItemService.BuyCartItems(currentUser);
+            buyItemService.ShowContent(currentUser);
+
+            CheckBalanse.CheckBalanceNow(currentUser);
 
         }
     }

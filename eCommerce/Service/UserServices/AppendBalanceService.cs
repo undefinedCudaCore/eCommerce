@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Models.UserModels;
+﻿using eCommerce.Models.UserModels;
 using eCommerce.Service.UserServices;
 
 namespace eCommerce.Service
@@ -16,7 +11,7 @@ namespace eCommerce.Service
         //    double temp = 13.56;
         //    //double temp = double.Parse(Console.ReadLine());
 
-            string name = "Alma";
+        string name = "Alma";
 
 
         // Less Optimized Code Below????
@@ -37,7 +32,7 @@ namespace eCommerce.Service
         // return templist;
         public void UpdateBalance(User _user, double value)
         {
-            _user.Balance = value;
+            _user.Balance += value;
             UsersDatabaseService database = new UsersDatabaseService();
             database.UpdateDatabase(_user);
         }

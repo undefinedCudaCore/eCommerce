@@ -6,7 +6,7 @@ namespace eCommerce.Service
     {
 
 
-        public static void CheckBalanceNow(List<User> User)
+        public static void CheckBalanceNow(User User)
         {
             // Check which user is logged in and insert to method
 
@@ -15,14 +15,15 @@ namespace eCommerce.Service
 
 
             //string temp = "Alma";
-            foreach (User user in User)
-            {
-                if (temp == user.Name)
-                {
-                    Console.WriteLine(user.Balance);
+            //foreach (User user in User)
+            //{
+            //if (temp == user.Name)
+            //{
+            Console.WriteLine(User.Username);
+            Console.WriteLine(User.Balance);
 
-                }
-            }
+            //}
+            //}
 
         }
 

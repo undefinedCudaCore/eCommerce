@@ -8,15 +8,16 @@ namespace eCommerce.Service.ShopService.CartService
 {
     internal class DisplayCartService : IFileRead, IShowContent, IFileCheckUserItems
     {
-        private double _price;
+        private double _totalPrice;
+        public static bool cartEmpty = false;
 
         public Dictionary<string, Item> ReadFromFile()
         {
-            if (File.Exists(FilePathData.CartDataPath))
+            if (File.Exists(FilePathData.CartDataPath1))
             {
                 try
                 {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath));
+                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath1));
 
                     List<KeyValuePair<string, Item>> myList = jsonData.ToList();
 
@@ -54,12 +55,14 @@ namespace eCommerce.Service.ShopService.CartService
             }
         }
 
-        public bool CheckIsThereItemsInCartForCurrentUser(User currentUser, Dictionary<string, Item> cartList)
+        public bool CheckIsThereItemsInCartForCurrentUser(User currentUser, Dictionary<string, Item> cartList, out bool haveItems)
         {
+            haveItems = false;
             foreach (var item in cartList)
             {
                 if (item.Value.ItemUserId == currentUser.UserId)
                 {
+                    haveItems = true;
                     return true;
                 }
             }
@@ -71,14 +74,14 @@ namespace eCommerce.Service.ShopService.CartService
             {
                 return 0;
             }
-            return _price += price;
+            return _totalPrice += price;
         }
 
         public void ShowContent(User currentUser)
         {
             var currUserId = currentUser.UserId;
             var cartDictionary = ReadFromFile();
-            bool isThereItems = CheckIsThereItemsInCartForCurrentUser(currentUser, cartDictionary);
+            bool isThereItems = CheckIsThereItemsInCartForCurrentUser(currentUser, cartDictionary, out bool haveItems);
 
             Console.WriteLine($"Users  cart information:");
             Console.WriteLine("Cart items:");
@@ -86,6 +89,7 @@ namespace eCommerce.Service.ShopService.CartService
 
             if (!isThereItems)
             {
+                cartEmpty = true;
                 Console.WriteLine("Cart is empty...");
             }
             else

@@ -11,11 +11,11 @@ namespace eCommerce.Service.ShopService.CartService
     {
         public Dictionary<string, Item> ReadFromFile()
         {
-            if (File.Exists(FilePathData.CartDataPath))
+            if (File.Exists(FilePathData.CartDataPath1))
             {
                 try
                 {
-                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath));
+                    var jsonData = JsonConvert.DeserializeObject<Dictionary<string, Item>>(File.ReadAllText(FilePathData.CartDataPath1));
                     List<KeyValuePair<string, Item>> myList = jsonData.ToList();
 
                     myList.Sort(
@@ -56,7 +56,7 @@ namespace eCommerce.Service.ShopService.CartService
             {
                 var jsonData = JsonConvert.SerializeObject(obj);
 
-                File.WriteAllText(FilePathData.CartDataPath, jsonData);
+                File.WriteAllText(FilePathData.CartDataPath1, jsonData);
             }
             catch (ArgumentException)
             {
