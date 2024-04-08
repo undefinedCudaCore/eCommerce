@@ -58,6 +58,8 @@ namespace eCommerce.Service.UserServices
 
             if (!users.ContainsKey(username))
             {
+                errors.Message = "Password is incorect or user does not exit";
+
                 errors.UserNotExits = true;
 
                 return errors;
@@ -86,6 +88,7 @@ namespace eCommerce.Service.UserServices
 
             }else
             {
+                errors.Message = "Password is incorect or user does not exit";
                 user.FailedConnectAttempts += 1;
 
                 if (user.FailedConnectAttempts == 3)
