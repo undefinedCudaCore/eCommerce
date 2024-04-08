@@ -23,6 +23,13 @@ namespace eCommerce
                 }
                 isFirstTry = false;
                 userInput = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(userInput))
+                    {
+                    if (userInput[0] == 'q' || userInput[0] == 'Q')
+                    {
+                        return (int)eShopStates.SHOW_MAINMENU;
+                    }
+                }
 
             } while (!int.TryParse(userInput, out selection) || !((selection >= min) && (selection <= max - 1)));
 

@@ -49,7 +49,7 @@ namespace eCommerce.Service.UserServices
 
             foreach (var user in users) 
             {
-                RegisteredUsers.Add(user.Value.UserID , $"Username {user.Key}");
+                RegisteredUsers.Add(user.Value.UserID , $"Username {user.Key} UserRole {(eUserType)user.Value.UserType}");
             }
             return RegisteredUsers;
         }

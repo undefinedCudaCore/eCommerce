@@ -12,23 +12,28 @@ namespace eCommerce
         USER_LOGIN,
         USER_LOGOUT,
         SHOW_MAINMENU,
+        SHOW_ADMINMENU
     };
 
 
     internal enum eAdminMenu
     {
+        ADMIN_MENU,
         ADD_NEW_PRODUCT,
         ADD_STOCK,
         REMOVE_PRODUCT,
         VIEW_REGISTERED_USERS,
         VIEW_CUSTOMERS,
-        REMOVE_USER
+        REMOVE_USER,
+        RETURN
+        
     }
     public class Program
     {
         static void Main(string[] args)
         {
-        eShopStates ShopStates = eShopStates.SHOW_MAINMENU;
+            eShopStates ShopStates = eShopStates.SHOW_MAINMENU;
+            eAdminMenu AdminMenu = eAdminMenu.ADMIN_MENU;
 
             ConsoleHelper CH = new ConsoleHelper();
 
@@ -44,10 +49,9 @@ namespace eCommerce
                         Console.Clear();
                         name = CH.GetUserInputString("Enter Username");
                         password = CH.GetUserInputString("Enter Password");
-                        Console.WriteLine("");
                         UserRegistrationService registrationService = new UserRegistrationService();
 
-                        if (!(registrationService.Register(name, password, eUserType.ADMINISTRATOR))) 
+                        if (!(registrationService.Register(name, password, eUserType.ADMINISTRATOR)))
                         {
 
                             Console.WriteLine("this user already exits in out database");
@@ -57,8 +61,8 @@ namespace eCommerce
 
                     case eShopStates.USER_LOGIN:
 
-                         name = "";
-                         password = "";
+                        name = "";
+                        password = "";
                         Console.Clear();
                         name = CH.GetUserInputString("Enter Username");
                         password = CH.GetUserInputString("Enter Password");
@@ -80,32 +84,91 @@ namespace eCommerce
                             Console.ReadKey();
                         }
                         ShopStates = eShopStates.SHOW_MAINMENU;
-
                         break;
+
                     case eShopStates.SHOW_MAINMENU:
 
                         foreach (var state in Enum.GetValues(typeof(eShopStates)))
                         {
                             Console.WriteLine($"[{(int)state}] {state}");
                         }
-                        ShopStates = (eShopStates)CH.GetUserInputNumeric("",0, Enum.GetValues(typeof(eShopStates)).Cast<int>().Max()+1);
-                        Console.ReadKey();
+                        ShopStates = (eShopStates)CH.GetUserInputNumeric("", 0, Enum.GetValues(typeof(eShopStates)).Cast<int>().Max() + 1);
+                        break;
+
+                    case eShopStates.SHOW_ADMINMENU:
+
+                        while (true)
+                        {
+                            bool exitRequested = false;
+                            Console.WriteLine("--ADMIN MENU--");
+                            foreach (var state in Enum.GetValues(typeof(eAdminMenu)))
+                            {
+                                Console.WriteLine($"[{(int)state}] {state}");
+                            }
+
+                            AdminMenu = (eAdminMenu)CH.GetUserInputNumeric("", 0, Enum.GetValues(typeof(eAdminMenu)).Cast<int>().Max() + 1);
+                            switch (AdminMenu)
+                            {
+                                case eAdminMenu.ADMIN_MENU:
+                                    break;
+                                case eAdminMenu.ADD_NEW_PRODUCT:
+                                    break;
+                                case eAdminMenu.ADD_STOCK:
+                                    break;
+                                case eAdminMenu.REMOVE_PRODUCT:
+                                    break;
+                                case eAdminMenu.VIEW_REGISTERED_USERS:
+
+                                    UserManagementService userManagement = new UserManagementService();
+                                    UserManagementErrors userManagementErr;
+                                    foreach (var item in userManagement.GetRegisteredUsersList())
+                                    {
+                                        Console.WriteLine("user ID" + item.Key +" "+ item.Value);
+                                    }
+                                    break;
+                                case eAdminMenu.VIEW_CUSTOMERS:
+
+                                     userManagement = new UserManagementService();
+                                    foreach (var item in userManagement.GetCustomersListUsersList())
+                                    {
+                                        Console.WriteLine(item);
+                                    }
+
+                                    break;
+                                case eAdminMenu.REMOVE_USER:
+                                    userManagement = new UserManagementService();
+
+                                    userManagementErr = userManagement.RemoveUserById(CH.GetUserInputNumeric("Enter ID to remove", 0, 9999));
+                                    if (!userManagementErr.success)
+                                    {
+                                        Console.WriteLine( $"Failed to remove user {userManagementErr.Message}");
+                                    } else Console.WriteLine( "User removes successfuly");
+                                    break;
+                                case eAdminMenu.RETURN:
+                                    exitRequested = true;
+                                    break;
+                                  
+                            }
+                            if (exitRequested) break;
+                        }
+                        ShopStates = eShopStates.SHOW_MAINMENU;
+
                         break;
                 }
             }
 
-                        User currentUser = new User();
+            User currentUser = new User();
 
 
 
 
-            UserManagementService userManagement = new UserManagementService();
+          //  UserManagementService userManagement = new UserManagementService();
 
-            var users = userManagement.GetRegisteredUsersList();
-            UserManagementErrors errors = new UserManagementErrors();
-            errors = userManagement.RemoveUserById(1);
+            //var users = userManagement.GetRegisteredUsersList();
+            //UserManagementErrors errors = new UserManagementErrors();
+            //errors = userManagement.RemoveUserById(1);
 
-            users = userManagement.GetRegisteredUsersList();
+            //users = userManagement.GetRegisteredUsersList();
 
             //_user = UserLoginService.Login("Karolis1", "la1");
 
