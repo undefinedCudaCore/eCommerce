@@ -1,8 +1,7 @@
 ﻿using eCommerce.Models.UserModels;
 using eCommerce.Service;
-using eCommerce.Service.ShopService.CartService;
+using eCommerce.Service.ShopService.ItemService;
 using eCommerce.Service.UserServices;
-using System.ComponentModel.Design;
 
 namespace eCommerce
 {
@@ -26,7 +25,7 @@ namespace eCommerce
         VIEW_CUSTOMERS,
         REMOVE_USER,
         RETURN
-        
+
     }
     public class Program
     {
@@ -112,6 +111,8 @@ namespace eCommerce
                                 case eAdminMenu.ADMIN_MENU:
                                     break;
                                 case eAdminMenu.ADD_NEW_PRODUCT:
+                                    CreateShopItemService createShopItemService = new CreateShopItemService();
+                                    CollectNewItemDataExtention.CollectNewItemData(createShopItemService);
                                     break;
                                 case eAdminMenu.ADD_STOCK:
                                     break;
@@ -123,12 +124,12 @@ namespace eCommerce
                                     UserManagementErrors userManagementErr;
                                     foreach (var item in userManagement.GetRegisteredUsersList())
                                     {
-                                        Console.WriteLine("user ID" + item.Key +" "+ item.Value);
+                                        Console.WriteLine("user ID" + item.Key + " " + item.Value);
                                     }
                                     break;
                                 case eAdminMenu.VIEW_CUSTOMERS:
 
-                                     userManagement = new UserManagementService();
+                                    userManagement = new UserManagementService();
                                     foreach (var item in userManagement.GetCustomersListUsersList())
                                     {
                                         Console.WriteLine(item);
@@ -141,13 +142,15 @@ namespace eCommerce
                                     userManagementErr = userManagement.RemoveUserById(CH.GetUserInputNumeric("Enter ID to remove", 0, 9999));
                                     if (!userManagementErr.success)
                                     {
-                                        Console.WriteLine( $"Failed to remove user {userManagementErr.Message}");
-                                    } else Console.WriteLine( "User removes successfuly");
+                                        Console.WriteLine($"Failed to remove user {userManagementErr.Message}");
+                                    }
+                                    else Console.WriteLine("User removes successfuly");
                                     break;
                                 case eAdminMenu.RETURN:
+                                    Console.Clear();
                                     exitRequested = true;
                                     break;
-                                  
+
                             }
                             if (exitRequested) break;
                         }
@@ -162,7 +165,7 @@ namespace eCommerce
 
 
 
-          //  UserManagementService userManagement = new UserManagementService();
+            //  UserManagementService userManagement = new UserManagementService();
 
             //var users = userManagement.GetRegisteredUsersList();
             //UserManagementErrors errors = new UserManagementErrors();
@@ -180,12 +183,12 @@ namespace eCommerce
 
             // _user = UserLoginService.Login("Karolis", "lala1");
 
-            AppendBalanceService balanceService = new AppendBalanceService();
+            //AppendBalanceService balanceService = new AppendBalanceService();
             //balanceService.UpdateBalance(currentUser, 100000);
 
-            CheckBalanse.CheckBalanceNow(currentUser);
+            //CheckBalanse.CheckBalanceNow(currentUser);
             //AppendBalance.AddToBalance(list);
-            CheckBalanse.CheckBalanceNow(currentUser);
+            //CheckBalanse.CheckBalanceNow(currentUser);
 
 
             //CreateShopItemService createShopItemService = new CreateShopItemService();
@@ -196,14 +199,14 @@ namespace eCommerce
             //CheckShopItemService check = new CheckShopItemService();
             //check.ShowContent(currentUser);
 
-            DisplayCartService displayCartService = new DisplayCartService();
-            displayCartService.ShowContent(currentUser);
+            //DisplayCartService displayCartService = new DisplayCartService();
+            //displayCartService.ShowContent(currentUser);
 
-            BuyItemService buyItemService = new BuyItemService();
-            buyItemService.BuyCartItems(currentUser);
-            buyItemService.ShowContent(currentUser);
+            //BuyItemService buyItemService = new BuyItemService();
+            //buyItemService.BuyCartItems(currentUser);
+            //buyItemService.ShowContent(currentUser);
 
-            CheckBalanse.CheckBalanceNow(currentUser);
+            //CheckBalanse.CheckBalanceNow(currentUser);
 
         }
 
