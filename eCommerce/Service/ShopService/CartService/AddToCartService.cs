@@ -32,19 +32,29 @@ namespace eCommerce.Service.ShopService.CartService
             }
         }
 
-        internal void AddToCartList(User user, Item item)
+        internal void AddToCartList(User user, string itemId)
         {
             ReadFromFileService readFromFileService = new ReadFromFileService();
             Dictionary<string, Item> cartDictionary = readFromFileService.ReadFromFile(FilePathData.CartDataPath1);
+
+            ReadFromFileService readFromFileService1 = new ReadFromFileService();
+            var itemDic = readFromFileService.ReadFromFile(FilePathData.ShopItemDataPath);
 
             if (cartDictionary == null)
             {
                 cartDictionary = new Dictionary<string, Item>();
             }
-            item.ItemUserId = user.UserId;
-            item.ItemQuantity = 1;
 
-            cartDictionary.Add(RandomId.RandomIdGenerator(), item);
+            foreach (var item in itemDic)
+            {
+                if (item.Value.ItemId == itemId)
+                {
+                    item.Value.ItemUserId = user.UserId;
+                    item.Value.ItemQuantity = 1;
+
+                    cartDictionary.Add(RandomId.RandomIdGenerator(), item.Value);
+                }
+            }
 
             WriteToFile(cartDictionary);
         }
