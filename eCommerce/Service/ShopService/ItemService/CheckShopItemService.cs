@@ -24,6 +24,7 @@ namespace eCommerce.Service.ShopService.ItemService
                 foreach (var item in itemDictionary)
                 {
                     Console.WriteLine("--------");
+                    Console.WriteLine($"Item ID: {item.Value.ItemId}");
                     Console.WriteLine($"Title: {item.Value.ItemName}");
                     Console.WriteLine($"Type: {item.Value.ItemType}");
                     Console.WriteLine($"Price: {item.Value.ItemPrice}");
