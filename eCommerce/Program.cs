@@ -103,6 +103,7 @@ namespace eCommerce
                                     displayCartService.ShowContent(currentUser);
                                     break;
                                 case eUserMenu.USER_BUY_CART:
+                                    Console.Clear();
                                     BuyItemService buyItemService = new BuyItemService();
                                     buyItemService.BuyCartItems(currentUser);
                                     buyItemService.ShowContent(currentUser);
@@ -119,6 +120,7 @@ namespace eCommerce
 
                                     break;
                                 case eUserMenu.USER_USERMENU_RETURN:
+                                    Console.Clear();
                                     exitRequested = true;
                                     break;
 

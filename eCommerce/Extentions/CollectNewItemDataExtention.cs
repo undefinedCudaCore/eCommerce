@@ -1,4 +1,4 @@
-﻿using eCommerce.Service.RandomGenerators;
+﻿using eCommerce.Extentions;
 
 namespace eCommerce.Service.ShopService.ItemService
 {
@@ -20,7 +20,7 @@ namespace eCommerce.Service.ShopService.ItemService
                 Console.WriteLine("Add item price (decimal):");
                 double itemPrice = double.Parse(Console.ReadLine());
 
-                newItem.CreateItem(RandomId.RandomIdGenerator(), itemName, itemDescription, itemType, itemPrice);
+                newItem.CreateItem(ItemIdExtention.SetItemId(), itemName, itemDescription, itemType, itemPrice);
 
                 Console.WriteLine($"Item '{itemName}' was successfully added.");
                 Thread.Sleep(3000);

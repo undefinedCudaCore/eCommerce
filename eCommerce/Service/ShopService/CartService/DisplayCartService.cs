@@ -56,6 +56,7 @@ namespace eCommerce.Service.ShopService.CartService
                     if (item.Value.ItemUserId == currUserId)
                     {
                         Console.WriteLine("--------");
+                        Console.WriteLine($"Item ID: {item.Value.ItemId}");
                         Console.WriteLine($"Title: {item.Value.ItemName}");
                         Console.WriteLine($"Type: {item.Value.ItemType}");
                         Console.WriteLine($"Price: {item.Value.ItemPrice}");
