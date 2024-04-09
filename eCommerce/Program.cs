@@ -1,19 +1,19 @@
-﻿using eCommerce.Models.ShopCart;
-using eCommerce.Models.UserModels;
+﻿using eCommerce.Models.UserModels;
 using eCommerce.Service;
+using eCommerce.Service.ShopService.CartService;
 using eCommerce.Service.ShopService.ItemService;
 using eCommerce.Service.UserServices;
 
 namespace eCommerce
 {
-//    Prisijungimą
-//Registracija(neteisingai mėginant prisijungti 3 ar daugiau kartų turėtų būti užblokuotas prisijungimas
-//Galimybę peržiūrėti savo turimą balansą
-//Galimybę papildyti savo balansą
-//Peržiūrėti sistemoje esančias prekes
-//Įsidėti sistemoje esančias prekes į krepšelį ir jį išsaugoti
-//Nusipirkti krepšelyje esančias prekes
-//Atsijungti
+    //    Prisijungimą
+    //Registracija(neteisingai mėginant prisijungti 3 ar daugiau kartų turėtų būti užblokuotas prisijungimas
+    //Galimybę peržiūrėti savo turimą balansą
+    //Galimybę papildyti savo balansą
+    //Peržiūrėti sistemoje esančias prekes
+    //Įsidėti sistemoje esančias prekes į krepšelį ir jį išsaugoti
+    //Nusipirkti krepšelyje esančias prekes
+    //Atsijungti
 
 
     internal enum eShopStates
@@ -59,7 +59,7 @@ namespace eCommerce
             UserManagementErrors userManagementErr;
             UserLoginErrors loginErrors;
             User currentUser = new User();
-               AppendBalanceService appendBalanceService = new AppendBalanceService();
+            AppendBalanceService appendBalanceService = new AppendBalanceService();
 
 
             UserLoginService loginService = new UserLoginService();
@@ -89,26 +89,33 @@ namespace eCommerce
                             switch (userMenu)
                             {
                                 case eUserMenu.USER_VIEW_PRODUCTS:
-
+                                    Console.Clear();
+                                    CheckShopItemService check = new CheckShopItemService();
+                                    check.ShowContent(currentUser);
                                     break;
                                 case eUserMenu.USER_VIEW_BALANCE:
-                                    
+
                                     Console.WriteLine(currentUser.Balance);
                                     break;
                                 case eUserMenu.USER_VIEW_CART:
-
+                                    Console.Clear();
+                                    DisplayCartService displayCartService = new DisplayCartService();
+                                    displayCartService.ShowContent(currentUser);
                                     break;
                                 case eUserMenu.USER_BUY_CART:
-
+                                    BuyItemService buyItemService = new BuyItemService();
+                                    buyItemService.BuyCartItems(currentUser);
+                                    buyItemService.ShowContent(currentUser);
                                     break;
                                 case eUserMenu.USER_ADD_BALANCE:
 
                                     if (currentUser.UserId != 0)
                                     {
-                                    appendBalanceService.UpdateBalance(currentUser, CH.GetUserInputNumeric("append amount - ", 1, 10000));
+                                        appendBalanceService.UpdateBalance(currentUser, CH.GetUserInputNumeric("append amount - ", 1, 10000));
                                         Console.WriteLine("balance updated succesfuly");
 
-                                    } else Console.WriteLine("user is not logged in");
+                                    }
+                                    else Console.WriteLine("user is not logged in");
 
                                     break;
                                 case eUserMenu.USER_USERMENU_RETURN:
@@ -275,7 +282,7 @@ namespace eCommerce
 
 
 
-          //  UserManagementService userManagement = new UserManagementService();
+            //  UserManagementService userManagement = new UserManagementService();
 
             //var users = userManagement.GetRegisteredUsersList();
             //UserManagementErrors errors = new UserManagementErrors();
@@ -312,9 +319,7 @@ namespace eCommerce
             //DisplayCartService displayCartService = new DisplayCartService();
             //displayCartService.ShowContent(currentUser);
 
-            //BuyItemService buyItemService = new BuyItemService();
-            //buyItemService.BuyCartItems(currentUser);
-            //buyItemService.ShowContent(currentUser);
+
 
             //CheckBalanse.CheckBalanceNow(currentUser);
 

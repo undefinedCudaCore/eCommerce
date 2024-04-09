@@ -127,9 +127,9 @@ namespace eCommerce.Service.ShopService.CartService
             {
                 Console.WriteLine($"{currentUser.Username}, you bought your items successfully!!!");
             }
-            else if (!DisplayCartService.cartEmpty)
+            else if (DisplayCartService.cartEmpty)
             {
-                Console.WriteLine("Purchase vas not successfull.");
+                Console.WriteLine($"Purchase vas not successfull. User {currentUser.Username} have no items in cart.");
             }
         }
     }
