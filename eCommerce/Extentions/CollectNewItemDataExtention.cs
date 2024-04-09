@@ -29,14 +29,20 @@ namespace eCommerce.Service.ShopService.ItemService
             catch (NullReferenceException)
             {
                 Console.WriteLine("Null object given..");
+                Thread.Sleep(3000);
+                Console.Clear();
             }
             catch (FormatException)
             {
                 Console.WriteLine("Entered wrong format.");
+                Thread.Sleep(3000);
+                Console.Clear();
             }
             catch (Exception)
             {
                 Console.WriteLine("Something went wrong, contact the system administrator....");
+                Thread.Sleep(3000);
+                Console.Clear();
             }
         }
     }

@@ -111,6 +111,7 @@ namespace eCommerce
                                 case eAdminMenu.ADMIN_MENU:
                                     break;
                                 case eAdminMenu.ADD_NEW_PRODUCT:
+                                    Console.Clear();
                                     CreateShopItemService createShopItemService = new CreateShopItemService();
                                     CollectNewItemDataExtention.CollectNewItemData(createShopItemService);
                                     break;
