@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace eCommerce.Service.ShopService.CartService
 {
-    internal class AddToCartServise : IFileWrite
+    internal class AddToCartService : IFileWrite
     {
 
         public void WriteToFile(Dictionary<string, Item> obj)
