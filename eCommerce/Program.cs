@@ -1,4 +1,5 @@
-﻿using eCommerce.Models.UserModels;
+﻿using eCommerce.Extentions;
+using eCommerce.Models.UserModels;
 using eCommerce.Service;
 using eCommerce.Service.ShopService.CartService;
 using eCommerce.Service.ShopService.ItemService;
@@ -92,6 +93,12 @@ namespace eCommerce
                                     Console.Clear();
                                     CheckShopItemService check = new CheckShopItemService();
                                     check.ShowContent(currentUser);
+                                    Console.WriteLine("Type item ID and press Enter to add item to cart:");
+
+                                    var itemIdToAddToCart = GetItemIdToAddItemToCartExtention.GetItemIdToAddItemToCart();
+
+                                    AddToCartService addToCartService = new AddToCartService();
+                                    addToCartService.AddToCartList(currentUser, itemIdToAddToCart);
                                     break;
                                 case eUserMenu.USER_VIEW_BALANCE:
 
