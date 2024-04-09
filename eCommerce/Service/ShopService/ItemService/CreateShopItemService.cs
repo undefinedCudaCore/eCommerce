@@ -8,7 +8,7 @@ namespace eCommerce.Service.ShopService.ItemService
 {
     internal class CreateShopItemService : IFileRead, IFileWrite
     {
-        internal static Item Item { get; set; }
+        internal static Item NewShopItem { get; set; }
         public Dictionary<string, Item> ReadFromFile(string path)
         {
             if (File.Exists(path) && new FileInfo(path).Length > 0)
@@ -55,8 +55,8 @@ namespace eCommerce.Service.ShopService.ItemService
 
         internal void CreateItem(string itemId, string itemName, string itemDescription, string itemType, double itemPrice)
         {
-            Item = new Item(itemId, itemName, itemDescription, itemType, itemPrice);
-            AddShopItemToList(Item);
+            NewShopItem = new Item(itemId, itemName, itemDescription, itemType, itemPrice);
+            AddShopItemToList(NewShopItem);
         }
     }
 }
